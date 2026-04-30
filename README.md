@@ -24,7 +24,10 @@
 ---
 
 <details>
+
 <summary>🇺🇿 O'zbek tilida</summary>
+
+# EduCode_Hub 🚀
 
 **EduCode Hub** — bu dasturlashni o'rganuvchilar uchun mo'ljallangan interaktiv ta'lim platformasi. Loyiha o'quvchilarga Full-stack yo'nalishida tizimli bilim olish, video darslarni ko'rish va o'z natijalarini kuzatib borish imkonini beradi.
 
