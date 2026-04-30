@@ -1,16 +1,44 @@
-# React + Vite
+# EduCode Hub 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**EduCode Hub** is an interactive educational platform designed for aspiring software engineers. It provides structured learning paths, video lessons, and progress tracking to help students master full-stack development.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Interactive Course Dashboard**: Seamless navigation between lessons.
+- **Integrated Video Player**: Direct integration with YouTube for high-quality video tutorials.
+- **Progress Tracking**: Reward system with XP points for completed lessons.
+- **Modern UI/UX**: Dark mode support and responsive design.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend**: React.js, CSS3, React Router
+- **Backend**: Python (FastAPI) - _In progress_
+- **Database**: PostgreSQL - _In progress_
 
-## Expanding the ESLint configuration
+## 🚀 Future Roadmap
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- [ ] Connect PostgreSQL for persistent user data.
+- [ ] Implement User Authentication (Login/Sign up).
+- [ ] Add real-time Leaderboard for "Team Challengers" members.
+
+---
+
+<details>
+<summary>🇺🇿 O'zbek tilida</summary>
+
+**EduCode Hub** — bu dasturlashni o'rganuvchilar uchun mo'ljallangan interaktiv ta'lim platformasi. Loyiha o'quvchilarga Full-stack yo'nalishida tizimli bilim olish, video darslarni ko'rish va o'z natijalarini kuzatib borish imkonini beradi.
+
+### ✨ Imkoniyatlar
+
+- **Interaktiv Kurs Paneli**: Darslar o'rtasida qulay navigatsiya.
+- **Integratsiyalashgan Video Player**: YouTube darsliklari bilan to'g'ridan-to'g'ri ishlash.
+- **Natijalarni Kuzatish**: Tugatilgan darslar uchun XP ballari tizimi.
+- **Zamonaviy Dizayn**: Dark mode va moslashuvchan interfeys.
+
+### 🛠️ Texnologiyalar
+
+- **Frontend**: React.js, CSS3, React Router
+- **Backend**: Python (FastAPI) - _Jarayonda_
+- **Database**: PostgreSQL - _Jarayonda_
+
+</details>
