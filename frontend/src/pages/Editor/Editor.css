@@ -1,0 +1,123 @@
+.editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 70px); /* Navbar balandligini olib tashlaymiz */
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 25px;
+  background-color: #252526;
+  border-bottom: 1px solid #333;
+}
+
+.lang-badge {
+  background: #f7df1e;
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.editor-header h3 {
+  display: inline;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.run-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.run-button:hover {
+  background-color: #43a047;
+  transform: scale(1.05);
+}
+
+.editor-main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.code-area {
+  flex: 1;
+  background-color: #1e1e1e;
+  position: relative;
+}
+
+.code-area textarea {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: #d4d4d4;
+  border: none;
+  padding: 20px;
+  font-family: "Fira Code", "Courier New", monospace;
+  font-size: 16px;
+  resize: none;
+  outline: none;
+  line-height: 1.5;
+}
+
+.output-area {
+  width: 350px;
+  background-color: #111;
+  border-left: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+}
+
+.output-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 15px !important;
+}
+
+.clear-btn {
+  background: transparent;
+  border: 1px solid #444;
+  color: #888;
+  font-size: 10px;
+  padding: 2px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.clear-btn:hover {
+  color: #fff;
+  border-color: #666;
+}
+
+.console-box {
+  flex: 1;
+  padding: 20px;
+  margin: 0;
+  color: #00ff00;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}

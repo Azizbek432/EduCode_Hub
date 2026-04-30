@@ -1,0 +1,130 @@
+/* 1. ASOSIY O'ZGARUVCHILAR */
+:root {
+  --accent: #6c63ff;
+  --accent-bg: rgba(108, 99, 255, 0.1);
+  --border: #e2e8f0;
+  --code-bg: #f8fafc;
+  --text-h: #1a202c;
+  --mono: "Fira Code", "Courier New", monospace;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --color-border-danger: #fc8181;
+  --color-bg-danger: #fff5f5;
+  --color-text-danger: #e53e3e;
+}
+
+[data-theme="dark"] {
+  --accent: #7c73ff;
+  --accent-bg: rgba(124, 115, 255, 0.15);
+  --border: #2d3748;
+  --code-bg: #1a202c;
+  --text-h: #f7fafc;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --color-border-danger: #9b2c2c;
+  --color-bg-danger: #2d1515;
+  --color-text-danger: #fc8181;
+}
+
+/* 2. UMUMIY RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background-color: var(--code-bg);
+  color: var(--text-h);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  line-height: 1.5;
+}
+
+[data-theme="dark"] body {
+  background-color: #0f1117;
+}
+
+.sidebar-logo-link,
+.sidebar-logo-link:hover,
+.sidebar-logo-link:focus,
+.sidebar-logo-link:active,
+.sidebar-logo-link:visited {
+  text-decoration: none !important;
+  color: transparent !important;
+  outline: none !important;
+  border: none !important;
+  display: block;
+}
+
+.sidebar-logo-link {
+  text-decoration: none !important;
+  display: block;
+  margin-bottom: 50px;
+}
+
+.sidebar-logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff !important;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.sidebar-logo span {
+  color: var(--accent) !important;
+}
+
+.sidebar-logo-link:hover .sidebar-logo {
+  opacity: 0.9;
+  color: #ffffff !important;
+}
+
+.terminal-container,
+.code-editor {
+  background-color: #1a202c;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.terminal-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+  border-color: var(--accent);
+}
+
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .auth-card {
+  background: #1a202c;
+  border: 1px solid var(--border);
+}
+
+[data-theme="dark"] .auth-header h2 {
+  color: var(--text-h);
+}
+
+[data-theme="dark"] .form-group input {
+  background: #2d3748;
+  border-color: #4a5568;
+  color: var(--text-h);
+}
+
+[data-theme="dark"] .form-group label {
+  color: #a0aec0;
+}
+
+.feature-card,
+.auth-card,
+.course-card {
+  background: var(--bg-card, #ffffff);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}

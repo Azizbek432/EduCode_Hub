@@ -1,0 +1,146 @@
+/* 1. ASOSIY SAHIFA */
+.courses-page {
+  padding-top: 100px;
+  min-height: 100vh;
+  background: var(--code-bg); /* index.css dagi asosiy fon o'zgaruvchisi */
+  padding-bottom: 50px;
+  transition: background 0.3s ease;
+}
+
+.courses-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 25px;
+}
+
+/* 2. HEADER */
+.courses-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.courses-header h1 {
+  font-size: 2.5rem;
+  color: var(--text-h); /* Dark modeda oq, Lightda to'q bo'ladi */
+  margin-bottom: 10px;
+}
+
+.courses-header p {
+  color: var(--text-sub);
+  font-size: 1.1rem;
+}
+
+/* 3. GRID VA KARTALAR */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.course-card {
+  background: var(
+    --bg-card
+  ); /* BU MUHIM: Dark modeda to'q ko'k, Lightda oq bo'ladi */
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.course-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--accent);
+  box-shadow: 0 15px 30px rgba(108, 99, 255, 0.2);
+}
+
+/* 4. KONTENT RANGI (MUAMMO SHUNDA EDI) */
+.course-content h3 {
+  color: var(--text-h) !important; /* Sarlavha har doim ko'rinishi shart */
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.course-content p {
+  color: var(
+    --text-sub
+  ) !important; /* Tavsif dark modeda och kulrang bo'ladi */
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  flex: 1;
+}
+
+/* 5. BADGE VA FOOTER */
+.course-badge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 5px 14px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.course-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 15px;
+  margin-top: auto;
+}
+
+.course-footer span {
+  color: var(--text-sub);
+  font-size: 13px;
+}
+
+/* 6. TUGMA (DOIM BINAFA SHA) */
+.start-btn {
+  background-color: var(--accent) !important;
+  color: #ffffff !important;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* 7. BADGE RANGLARI (DARK MODEDA HAM CHIROYLI KO'RINADI) */
+.course-badge.beginner {
+  background: rgba(56, 178, 172, 0.1);
+  color: #38b2ac;
+}
+.course-badge.middle {
+  background: rgba(221, 107, 32, 0.1);
+  color: #dd6b20;
+}
+.course-badge.professional {
+  background: rgba(229, 62, 62, 0.1);
+  color: #e53e3e;
+}
+
+/* DARK MODE UCHUN MAXSUS QO'SHIMCHA */
+[data-theme="dark"] .course-card {
+  background: #1a202c !important; /* Dark mode uchun qattiq rang */
+}
+
+@media (max-width: 768px) {
+  .courses-header h1 {
+    font-size: 2rem;
+  }
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+}

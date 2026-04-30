@@ -1,0 +1,185 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 50px;
+  background: var(--navbar-bg); /* App.css dagi o'zgaruvchi */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* Dark modeda fon biroz to'qroq ko'rinishi uchun */
+[data-theme="dark"] .navbar {
+  background: rgba(26, 32, 44, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-icon {
+  background: #6c63ff; /* Asosiy binafsha rang */
+  color: white;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary) !important; /* LIGHT MODEDA QORA, DARK MODEDA OQ */
+  letter-spacing: -0.3px;
+}
+
+.logo-accent {
+  color: #ffd700;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+}
+
+.navbar-links a {
+  color: var(--text-primary) !important;
+  opacity: 0.85;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.navbar-links a:hover {
+  background: rgba(108, 99, 255, 0.15);
+  color: #6c63ff !important;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.theme-toggle {
+  background: rgba(108, 99, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-login {
+  color: var(--text-primary) !important;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  transition: all 0.2s;
+}
+
+.btn-register {
+  color: white !important;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #6c63ff;
+  transition: all 0.2s;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.welcome-msg {
+  color: var(--text-primary) !important;
+  font-size: 14px;
+  font-weight: 500;
+  border-right: 1px solid var(--border-color);
+  padding-right: 15px;
+}
+
+.btn-logout {
+  background: rgba(255, 79, 79, 0.1);
+  color: #ff4f4f;
+  border: 1px solid rgba(255, 79, 79, 0.2);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-logout:hover {
+  background: #ff4f4f;
+  color: white !important;
+}
+
+/* RESPONSIVE MUAMMOSI UCHUN */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .navbar-links {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: var(--main-bg); /* App.css dan oladi */
+    flex-direction: column;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+}

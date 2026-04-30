@@ -1,0 +1,246 @@
+/* Home Page Wrapper - Navbardan qochish uchun */
+.home-page {
+  padding-top: 80px; /* Navbar sloganni yopib qo'ymasligi uchun */
+  background-color: #ffffff;
+}
+
+[data-theme="dark"] .home-page {
+  background-color: #0f1117;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 24px 80px; /* Padding-top oshirildi */
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 540px;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(108, 99, 255, 0.1);
+  color: #6c63ff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(108, 99, 255, 0.2);
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--text-h);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.hero-accent {
+  background: linear-gradient(135deg, #6c63ff, #4facfe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: #718096;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+/* Tugmalardagi qizil effektni yo'qotish */
+.hero-btn-primary {
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #6c63ff, #4facfe);
+  color: white !important; /* Rangni qat'iy saqlaymiz */
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s;
+  border: none;
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(108, 99, 255, 0.35);
+  color: white !important;
+}
+
+.hero-btn-secondary {
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--text-h) !important;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  border: 2px solid var(--border);
+  transition: all 0.2s;
+}
+
+.hero-btn-secondary:hover {
+  border-color: #6c63ff;
+  color: #6c63ff !important;
+}
+
+/* Link bosilganda qizarishini yo'qotish (Global fix) */
+.hero-btn-primary:active,
+.hero-btn-secondary:active {
+  outline: none;
+  background: inherit;
+}
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #718096;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--border);
+}
+
+/* Kod Preview qismi */
+.hero-visual {
+  flex: 1;
+  max-width: 480px;
+}
+
+.code-preview {
+  background: #1a1f2e;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.code-preview-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 16px;
+  background: #252b3b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.dot.red {
+  background: #ff5f57;
+}
+.dot.yellow {
+  background: #febc2e;
+}
+.dot.green {
+  background: #28c840;
+}
+
+.code-preview-title {
+  margin-left: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--mono);
+}
+
+.code-preview-body {
+  padding: 24px;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: #a9b1d6;
+  line-height: 1.8;
+  margin: 0;
+  white-space: pre;
+}
+
+/* Xususiyatlar (Features) */
+.features {
+  padding: 80px 0;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .feature-card {
+  background: #1a202c;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(108, 99, 255, 0.12);
+  border-color: rgba(108, 99, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-subtitle {
+    text-align: center;
+  }
+  .hero-btns,
+  .hero-stats {
+    justify-content: center;
+  }
+  .hero-visual {
+    width: 100%;
+    margin-top: 40px;
+  }
+}
