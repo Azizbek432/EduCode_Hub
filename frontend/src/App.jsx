@@ -12,12 +12,10 @@ import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import "./App.css";
 
 function App() {
-  // 1. Dark Mode State - LocalStorage bilan boshlang'ich qiymat
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
   });
 
-  // 2. User State - LocalStorage bilan
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("edu_user");
     return savedUser
@@ -29,9 +27,7 @@ function App() {
         };
   });
 
-  // 3. Theme va User ma'lumotlarini sinxronizatsiya qilish
   useEffect(() => {
-    // Dark mode klasini HTML elementiga qo'shish
     if (darkMode) {
       document.documentElement.setAttribute("data-theme", "dark");
       localStorage.setItem("theme", "dark");
@@ -40,11 +36,9 @@ function App() {
       localStorage.setItem("theme", "light");
     }
 
-    // Foydalanuvchi ma'lumotlarini saqlash
     localStorage.setItem("edu_user", JSON.stringify(user));
-  }, [user, darkMode]); // Faqat user yoki darkMode o'zgarganda ishlaydi
+  }, [user, darkMode]);
 
-  // 4. XP qo'shish funksiyasi (Callback)
   const handleAddXP = (amount, lessonId) => {
     if (user.completedLessons.includes(lessonId)) {
       alert("Bu darsni allaqachon tugatgansiz!");
@@ -58,7 +52,6 @@ function App() {
     }));
   };
 
-  // 5. Leaderboard - Hisoblashlarni optimallashtirish
   const leaderboardUsers = useMemo(() => {
     const others = [
       { id: 1, name: "Doston_Dev", points: 1500, level: "Middle" },
@@ -81,7 +74,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* Navbar'ga setDarkMode emas, toggle funksiyasini beramiz */}
       <Navbar
         darkMode={darkMode}
         toggleDark={() => setDarkMode(!darkMode)}
