@@ -1,0 +1,12 @@
+{
+  "navbar": {
+    "courses": "Courses",
+    "about": "About Us",
+    "leaderboard": "Leaderboard",
+    "login": "Login"
+  },
+  "hero": {
+    "title": "Welcome to EduCode Hub!",
+    "subtitle": "Learn programming interactively and build real projects."
+  }
+}

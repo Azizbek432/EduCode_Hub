@@ -1,0 +1,12 @@
+{
+  "navbar": {
+    "courses": "Kurslar",
+    "about": "Biz haqimizda",
+    "leaderboard": "Reyting",
+    "login": "Kirish"
+  },
+  "hero": {
+    "title": "EduCode Hub ga xush kelibsiz!",
+    "subtitle": "Dasturlashni interaktiv o'rganing va amaliy loyihalar yarating."
+  }
+}
