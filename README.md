@@ -1,3 +1,5 @@
+
+
 # EduCode Hub 🚀
 
 **EduCode Hub** is an interactive educational platform designed for aspiring software engineers. It provides structured learning paths, video lessons, and progress tracking to help students master full-stack development.
@@ -17,8 +19,8 @@
 
 ## 🚀 Future Roadmap
 
-- [ ] Connect PostgreSQL for persistent user data.
-- [ ] Implement User Authentication (Login/Sign up).
+- [x] Connect PostgreSQL for persistent user data.
+- [x] Implement User Authentication (Login/Sign up).
 - [ ] Add real-time Leaderboard for "Team Challengers" members.
 
 ---
