@@ -12,12 +12,12 @@
 ## 🛠️ Tech Stack
 
 - **Frontend**: React.js, CSS3, React Router
-- **Backend**: Python (FastAPI) - _In progress_
-- **Database**: PostgreSQL - _In progress_
+- **Backend**: Supabase - _In progress_
+- **Database**: Supabase - _In progress_
 
 ## 🚀 Future Roadmap
 
-- [ ] Connect PostgreSQL for persistent user data.
+- [ ] Connect Supabase for persistent user data.
 - [ ] Implement User Authentication (Login/Sign up).
 - [ ] Add real-time Leaderboard for "Team Challengers" members.
 
@@ -41,7 +41,7 @@
 ### 🛠️ Texnologiyalar
 
 - **Frontend**: React.js, CSS3, React Router
-- **Backend**: Python (FastAPI) - _Jarayonda_
-- **Database**: PostgreSQL - _Jarayonda_
+- **Backend**: Supabase - _Jarayonda_
+- **Database**: Supabase - _Jarayonda_
 
 </details>
