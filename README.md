@@ -14,8 +14,8 @@
 ## 🛠️ Tech Stack
 
 - **Frontend**: React.js, CSS3, React Router
-- **Backend**: Python (FastAPI) - _In progress_
-- **Database**: PostgreSQL - _In progress_
+- **Backend**: Supabase - _In progress_
+- **Database**: Supabase - _In progress_
 
 ## 🚀 Future Roadmap
 
@@ -43,7 +43,7 @@
 ### 🛠️ Texnologiyalar
 
 - **Frontend**: React.js, CSS3, React Router
-- **Backend**: Python (FastAPI) - _Jarayonda_
-- **Database**: PostgreSQL - _Jarayonda_
+- **Backend**: Supabase - _Jarayonda_
+- **Database**: Supabase - _Jarayonda_
 
 </details>
