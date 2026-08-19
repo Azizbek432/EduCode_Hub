@@ -28,4 +28,18 @@ export const getCourseBySlug = async (slug) => {
   return data;
 };
 
+export const getLeaderboard = async () => {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .order("points", { ascending: false });
+
+  if (error) {
+    console.error("Leaderboard yuklashda xatolik:", error.message);
+    return [];
+  }
+
+  return data;
+};
+
 export const getAllCourses = getCourses;
