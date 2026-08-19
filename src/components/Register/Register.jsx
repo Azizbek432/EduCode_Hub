@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "../../services/api";
+import { supabase } from "../../lib/supabaseClient";
 import "./Register.css";
 
 function Register() {
@@ -30,10 +30,32 @@ function Register() {
     setIsLoading(true);
 
     try {
-      await registerUser(formData.email, formData.password, formData.fullName);
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (signUpError) {
+        console.error("Supabase SignUp Error Details:", signUpError);
+        throw new Error(signUpError.message);
+      }
+
+      if (data?.user) {
+        const { error: profileError } = await supabase.from("profiles").upsert({
+          id: data.user.id,
+          full_name: formData.fullName,
+          xp_points: 0,
+        });
+
+        if (profileError) {
+          console.error("Supabase Profile Insert Error Details:", profileError);
+        }
+      }
+
       navigate("/dashboard");
     } catch (err) {
-      setError(err.message || "Ro'yxatdan o'tishda xatolik yuz berdi!");
+      console.error("Register Error Catch:", err);
+      setError(err.message || JSON.stringify(err));
     } finally {
       setIsLoading(false);
     }
