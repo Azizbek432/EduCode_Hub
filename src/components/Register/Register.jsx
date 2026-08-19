@@ -1,19 +1,18 @@
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabaseClient";
 import "./Register.css";
 
 function Register() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,30 +21,32 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setSuccess("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Parollar mos kelmadi!");
+      setError("Parollar bir-biriga mos kelmadi!");
       return;
     }
 
     setIsLoading(true);
+
     try {
-      await axios.post("http://127.0.0.1:8000/auth/register", {
-        username: formData.username,
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
       });
 
-      setSuccess(
-        "Muvaffaqiyatli ro'yxatdan o'tdingiz! Kirish sahifasiga o'tkazilmoqda...",
-      );
+      if (signUpError) throw signUpError;
+      if (data.user) {
+        await supabase.from("profiles").upsert({
+          id: data.user.id,
+          full_name: formData.fullName,
+          xp_points: 0,
+        });
+      }
 
-      setTimeout(() => {
-        navigate("/login");
-      }, 1500);
+      navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.detail || "Xatolik yuz berdi!");
+      setError(err.message || "Ro'yxatdan o'tishda xatolik yuz berdi!");
     } finally {
       setIsLoading(false);
     }
@@ -61,17 +62,16 @@ function Register() {
         </div>
 
         {error && <div className="auth-alert error">{error}</div>}
-        {success && <div className="auth-alert success">{success}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label>Foydalanuvchi nomi</label>
+            <label>To'liq ismingiz</label>
             <input
               type="text"
-              name="username"
-              value={formData.username}
+              name="fullName"
+              value={formData.fullName}
               onChange={handleChange}
-              placeholder="azizbek123"
+              placeholder="Azizbek Abdullayev"
               required
             />
           </div>
@@ -83,7 +83,7 @@ function Register() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="email@example.com"
+              placeholder="azizbekabdullayev3500@gmail.com"
               required
             />
           </div>
@@ -95,8 +95,7 @@ function Register() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Kamida 6 ta belgi"
-              minLength={6}
+              placeholder="••••••••"
               required
             />
           </div>
@@ -108,18 +107,18 @@ function Register() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              placeholder="Parolni qayta kiriting"
+              placeholder="••••••••"
               required
             />
           </div>
 
           <button type="submit" className="auth-btn" disabled={isLoading}>
-            {isLoading ? "Yuklanmoqda..." : "Ro'yxatdan o'tish"}
+            {isLoading ? "Bajarilmoqda..." : "Ro'yxatdan o'tish"}
           </button>
         </form>
 
         <p className="auth-switch">
-          Hisobingiz bormi? <a href="/login">Kirish</a>
+          Hisobingiz bormi? <Link to="/login">Kirish</Link>
         </p>
       </div>
     </div>
