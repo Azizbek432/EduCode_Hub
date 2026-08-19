@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from "../../lib/supabaseClient";
+import { loginUser } from "../../services/api";
 import "./Login.css";
 
 function Login() {
@@ -22,16 +22,8 @@ function Login() {
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      });
-
-      if (error) throw error;
-
-      if (data.session) {
-        navigate("/dashboard");
-      }
+      await loginUser(formData.email, formData.password);
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message || "Email yoki parol xato!");
     } finally {
