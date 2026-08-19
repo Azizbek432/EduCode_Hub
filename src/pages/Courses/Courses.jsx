@@ -16,29 +16,30 @@ function Courses({ user }) {
     fetchCourses();
   }, []);
 
-  // Kurs nomi va kategoriyasiga qarab ikonka, daraja va davomiylikni aniqlash
   const getMeta = (title = "", category = "") => {
     const t = title.toLowerCase();
     const c = category.toLowerCase();
 
     if (t.includes("javascript") || c.includes("js"))
-      return { icon: "🟨", level: "Boshlang'ich", badgeClass: "beginner" };
+      return { icon: "🟨", badgeClass: "beginner" };
     if (t.includes("python") || c.includes("python"))
-      return { icon: "🟦", level: "O'rta", badgeClass: "middle" };
+      return { icon: "🟦", badgeClass: "middle" };
     if (t.includes("react") || c.includes("react"))
-      return { icon: "⚛️", level: "Professional", badgeClass: "professional" };
-    if (t.includes("c++") || t.includes("game"))
-      return { icon: "🎮", level: "O'rta", badgeClass: "middle" };
+      return { icon: "⚛️", badgeClass: "professional" };
+    if (t.includes("sql") || c.includes("database"))
+      return { icon: "🛢️", badgeClass: "beginner" };
+    if (t.includes("go") || c.includes("backend"))
+      return { icon: "🐹", badgeClass: "middle" };
 
-    return { icon: "📚", level: "Boshlang'ich", badgeClass: "beginner" };
+    return { icon: "📚", badgeClass: "beginner" };
   };
 
   return (
     <div className="courses-page">
       <div className="courses-container">
         <header className="courses-header">
-          <h1>Xush kelibsiz, {user?.name || "Dasturchi"}! 🚀</h1>
-          <p>Dasturlash tillarini amaliy topshiriqlar orqali o'rganing</p>
+          <h1>Xush kelibsiz, {user?.user_metadata?.full_name || "Dasturchi"}! 🚀</h1>
+          <p>Dasturlash tillarini amaliy video va darsliklar orqali o'rganing</p>
         </header>
 
         {loading ? (
@@ -53,7 +54,7 @@ function Courses({ user }) {
                     <div className="course-icon">{meta.icon}</div>
                     <div className="course-content">
                       <span className={`course-badge ${meta.badgeClass}`}>
-                        {meta.level}
+                        {course.level || "Boshlang'ich"}
                       </span>
                       <h3>{course.title}</h3>
                       <p>{course.description}</p>

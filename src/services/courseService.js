@@ -1,45 +1,61 @@
-import { supabase } from "../lib/supabaseClient";
+import { supabase } from '../lib/supabaseClient'
 
-export const getCourses = async () => {
-  const { data, error } = await supabase
-    .from("courses")
-    .select("*");
+export async function getCourses() {
+  try {
+    const { data, error } = await supabase
+      .from('courses')
+      .select('*')
+      .eq('is_published', true)
+      .order('created_at', { ascending: true })
 
-  if (error) {
-    console.error("Kurslarni yuklashda xatolik:", error.message);
-    return [];
+    if (error) throw error
+    return data || []
+  } catch (err) {
+    console.error('Kurslarni olishda xatolik:', err.message)
+    return []
   }
+}
 
-  return data;
-};
+export async function getCourseBySlug(slug) {
+  try {
+    const { data: course, error: courseError } = await supabase
+      .from('courses')
+      .select('*')
+      .eq('slug', slug)
+      .single()
 
-export const getCourseBySlug = async (slug) => {
-  const { data, error } = await supabase
-    .from("courses")
-    .select("*, lessons(*)")
-    .eq("slug", slug)
-    .single();
+    if (courseError || !course) return null
 
-  if (error) {
-    console.error("Slug bo'yicha kursni olishda xatolik:", error.message);
-    return null;
+    const { data: lessons, error: lessonsError } = await supabase
+      .from('lessons')
+      .select('*')
+      .eq('course_id', course.id)
+      .order('order_index', { ascending: true })
+
+    if (lessonsError) throw lessonsError
+
+    return {
+      ...course,
+      lessons: lessons || []
+    }
+  } catch (err) {
+    console.error('Kurs detalini olishda xatolik:', err.message)
+    return null
   }
+}
 
-  return data;
-};
+export async function getLessonById(lessonId) {
+  try {
+    const { data, error } = await supabase
+      .from('lessons')
+      .select('*')
+      .eq('id', lessonId)
+      .single()
 
-export const getLeaderboard = async () => {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .order("points", { ascending: false });
-
-  if (error) {
-    console.error("Leaderboard yuklashda xatolik:", error.message);
-    return [];
+    if (error) throw error
+    return data
+  } catch (err) {
+    console.error('Darsni olishda xatolik:', err.message)
+    return null
   }
-
-  return data;
-};
-
-export const getAllCourses = getCourses;
+}

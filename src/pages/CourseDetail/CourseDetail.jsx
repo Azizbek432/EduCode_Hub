@@ -10,6 +10,7 @@ export default function CourseDetail() {
 
   useEffect(() => {
     const fetchCourse = async () => {
+      setLoading(true)
       const data = await getCourseBySlug(slug)
       setCourse(data)
       setLoading(false)
@@ -25,7 +26,10 @@ export default function CourseDetail() {
       <div className="course-detail-header">
         <h1>{course.title}</h1>
         <p>{course.description}</p>
-        <span className="author-tag">Muallif: {course.author}</span>
+        <div className="course-tags">
+          <span className="author-tag">Muallif: {course.author || 'EduCode Hub'}</span>
+          <span className="level-tag">Daraja: {course.level}</span>
+        </div>
       </div>
 
       <div className="lessons-list-section">
@@ -38,6 +42,9 @@ export default function CourseDetail() {
                 <div className="lesson-info">
                   <h4>{lesson.title}</h4>
                   <p>{lesson.description || "Amaliy topshiriqlar va video darslik."}</p>
+                  {lesson.duration_minutes > 0 && (
+                    <span className="lesson-duration">⏱ {lesson.duration_minutes} daqiqa</span>
+                  )}
                 </div>
                 <Link to={`/courses/${course.slug}/lessons/${lesson.id}`} className="watch-btn">
                   Tomosha qilish ▶
