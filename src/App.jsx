@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { supabase } from "./lib/supabaseClient";
-
 import Navbar from "./components/Navbar/Navbar";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
@@ -9,6 +8,7 @@ import Home from "./pages/Home/Home";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Courses from "./pages/Courses/Courses";
 import CourseDetail from "./pages/CourseDetail/CourseDetail";
+import LessonView from "./pages/LessonView/LessonView";
 import Editor from "./pages/Editor/Editor";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import "./App.css";
@@ -77,8 +77,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard session={session} profile={profile} />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/course/:id" element={<CourseDetail session={session} profile={profile} />} />
+        <Route path="/courses" element={<Courses user={profile} />} />
+        <Route path="/courses/:slug" element={<CourseDetail session={session} profile={profile} />} />
+        <Route path="/courses/:slug/lessons/:lessonId" element={<LessonView session={session} profile={profile} />} />
         <Route path="/editor" element={<Editor />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
