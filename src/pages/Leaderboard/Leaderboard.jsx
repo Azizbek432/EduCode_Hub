@@ -1,58 +1,77 @@
-import React from "react";
-import "./Leaderboard.css";
+import React, { useEffect, useState } from 'react'
+import { getLeaderboard } from '../../services/courseService'
+import './Leaderboard.css'
 
-function Leaderboard({ users, currentUser }) {
-  // Foydalanuvchilarni ballari bo'yicha kamayish tartibida saralaymiz
-  const sortedUsers = [...users].sort((a, b) => b.points - a.points);
+export default function Leaderboard() {
+  const [leaders, setLeaders] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const data = await getLeaderboard()
+        setLeaders(Array.isArray(data) ? data : [])
+      } catch (err) {
+        console.error('Leaderboard error:', err)
+        setLeaders([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchLeaderboard()
+  }, [])
 
   return (
-    <div className="leaderboard-wrapper">
-      <div className="leaderboard-container">
-        <header className="leaderboard-header">
-          <h1>Peshqadamlar Jadvali 👑</h1>
-          <p>Dasturlash olamining eng kuchli bilimdonlari</p>
-        </header>
-
-        <div className="leaderboard-card">
-          <div className="leaderboard-table-header">
-            <span>O'rin</span>
-            <span>Foydalanuvchi</span>
-            <span>Daraja</span>
-            <span>Jami XP</span>
-          </div>
-
-          <div className="leaderboard-list">
-            {sortedUsers.map((u, index) => (
-              <div
-                key={u.id}
-                className={`leaderboard-row ${u.name === currentUser ? "active-user-row" : ""}`}
-              >
-                <div className="rank">
-                  {index === 0
-                    ? "🥇"
-                    : index === 1
-                      ? "🥈"
-                      : index === 2
-                        ? "🥉"
-                        : `#${index + 1}`}
-                </div>
-                <div className="user-profile">
-                  <div className="user-avatar-small">
-                    {u.name.charAt(0).toUpperCase()}
-                  </div>
-                  <span className="user-name-text">{u.name}</span>
-                </div>
-                <div className="user-level-badge">{u.level}</div>
-                <div className="user-xp-total">
-                  {u.points.toLocaleString()} XP
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+    <div className="leaderboard-container">
+      <div className="leaderboard-header">
+        <h1>🏆 O'zbekiston Dasturchilari Reytingi</h1>
+        <p>EduCode Hub platformasida darslarni tugatib, XP to'plang va peshqadamlar safidan joy oling!</p>
       </div>
-    </div>
-  );
-}
 
-export default Leaderboard;
+      {loading ? (
+        <div className="loading-spinner">Reyting yuklanmoqda...</div>
+      ) : (
+        <div className="leaderboard-table-wrapper">
+          <table className="leaderboard-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Dasturchi</th>
+                <th>XP Ballari</th>
+              </tr>
+            </thead>
+            <tbody>
+              {leaders && leaders.length > 0 ? (
+                leaders.map((user, index) => (
+                  <tr key={user?.id || index} className={index < 3 ? `top-${index + 1}` : ''}>
+                    <td className="rank-cell">
+                      {index === 0 && '🥇'}
+                      {index === 1 && '🥈'}
+                      {index === 2 && '🥉'}
+                      {index > 2 && index + 1}
+                    </td>
+                    <td className="user-cell">
+                      <img 
+                        src={user?.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${user?.id || index}`} 
+                        alt="avatar" 
+                        className="user-avatar"
+                      />
+                      <span className="user-name">{user?.full_name || 'Noma\'lum Dasturchi'}</span>
+                    </td>
+                    <td className="xp-cell">{user?.xp_points || 0} XP</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3" style={{ textAlign: 'center', padding: '20px' }}>
+                    Hozircha peshqadamlar yo'q. Birinchi bo'lib XP to'plang!
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  )
+}
