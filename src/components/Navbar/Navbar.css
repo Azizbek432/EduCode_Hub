@@ -1,4 +1,4 @@
-nav.navbar {
+html body nav.navbar {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
@@ -15,7 +15,7 @@ nav.navbar {
   padding: 0 !important;
 }
 
-nav.navbar .navbar-container {
+html body nav.navbar .navbar-container {
   width: 100% !important;
   max-width: 1400px !important;
   margin: 0 auto !important;
@@ -27,15 +27,16 @@ nav.navbar .navbar-container {
   box-sizing: border-box !important;
 }
 
-nav.navbar a.navbar-logo {
+html body nav.navbar a.navbar-logo {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
   text-decoration: none !important;
   color: #ffffff !important;
+  white-space: nowrap !important;
 }
 
-nav.navbar .logo-icon {
+html body nav.navbar .logo-icon {
   background: #6c63ff !important;
   color: #ffffff !important;
   padding: 4px 8px !important;
@@ -45,63 +46,60 @@ nav.navbar .logo-icon {
   line-height: 1 !important;
 }
 
-nav.navbar .logo-text {
+html body nav.navbar .logo-text {
   font-size: 20px !important;
   font-weight: 800 !important;
   color: #ffffff !important;
   line-height: 1 !important;
 }
 
-nav.navbar .logo-accent {
+html body nav.navbar .logo-accent {
   color: #6c63ff !important;
 }
 
-nav.navbar ul.navbar-links {
+html body nav.navbar ul.navbar-links {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  gap: 16px !important;
+  gap: 12px !important;
   list-style: none !important;
-  list-style-type: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-nav.navbar ul.navbar-links li {
+html body nav.navbar ul.navbar-links li {
   display: inline-flex !important;
-  list-style: none !important;
-  list-style-type: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-nav.navbar ul.navbar-links li a,
-nav.navbar ul.navbar-links li a:-webkit-any-link {
+html body nav.navbar ul.navbar-links li a,
+html body nav.navbar ul.navbar-links li a:-webkit-any-link {
   color: #a3aed0 !important;
   text-decoration: none !important;
   font-size: 15px !important;
   font-weight: 500 !important;
-  padding: 8px 14px !important;
+  padding: 8px 12px !important;
   border-radius: 8px !important;
   transition: all 0.2s ease !important;
+  white-space: nowrap !important;
   display: inline-block !important;
   line-height: 1.2 !important;
 }
 
-nav.navbar ul.navbar-links li a:hover {
+html body nav.navbar ul.navbar-links li a:hover {
   color: #ffffff !important;
   background: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* RIGHT SECTION */
-nav.navbar .navbar-right {
+html body nav.navbar .navbar-right {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
   gap: 12px !important;
 }
 
-nav.navbar .theme-toggle {
+html body nav.navbar .theme-toggle {
   background: rgba(255, 255, 255, 0.08) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   color: #ffffff !important;
@@ -112,17 +110,18 @@ nav.navbar .theme-toggle {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  flex-shrink: 0 !important;
 }
 
-nav.navbar .user-menu {
+html body nav.navbar .user-menu {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
   gap: 10px !important;
 }
 
-nav.navbar a.user-profile-badge,
-nav.navbar a.user-profile-badge:-webkit-any-link {
+html body nav.navbar a.user-profile-badge,
+html body nav.navbar a.user-profile-badge:-webkit-any-link {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
@@ -134,9 +133,10 @@ nav.navbar a.user-profile-badge:-webkit-any-link {
   font-weight: 600 !important;
   font-size: 14px !important;
   text-decoration: none !important;
+  white-space: nowrap !important;
 }
 
-nav.navbar .btn-logout-nav {
+html body nav.navbar .btn-logout-nav {
   background: rgba(239, 68, 68, 0.15) !important;
   border: 1px solid rgba(239, 68, 68, 0.3) !important;
   color: #ef4444 !important;
@@ -147,25 +147,28 @@ nav.navbar .btn-logout-nav {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  flex-shrink: 0 !important;
 }
 
-nav.navbar .auth-buttons {
+html body nav.navbar .auth-buttons {
   display: flex !important;
+  flex-direction: row !important;
   align-items: center !important;
-  gap: 10px !important;
+  gap: 12px !important;
 }
 
-nav.navbar a.btn-login,
-nav.navbar a.btn-login:-webkit-any-link {
+html body nav.navbar a.btn-login,
+html body nav.navbar a.btn-login:-webkit-any-link {
   color: #ffffff !important;
   text-decoration: none !important;
   font-size: 14px !important;
   font-weight: 500 !important;
-  padding: 8px 16px !important;
+  padding: 8px 14px !important;
+  white-space: nowrap !important;
 }
 
-nav.navbar a.btn-register,
-nav.navbar a.btn-register:-webkit-any-link {
+html body nav.navbar a.btn-register,
+html body nav.navbar a.btn-register:-webkit-any-link {
   background: #6c63ff !important;
   color: #ffffff !important;
   text-decoration: none !important;
@@ -173,4 +176,5 @@ nav.navbar a.btn-register:-webkit-any-link {
   font-weight: 600 !important;
   padding: 8px 16px !important;
   border-radius: 10px !important;
+  white-space: nowrap !important;
 }
