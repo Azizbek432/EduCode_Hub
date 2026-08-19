@@ -1,11 +1,51 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabaseClient";
 import "./Dashboard.css";
 
-function Dashboard({ user }) {
-  const userXP = user?.xp || 0;
+function Dashboard() {
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
+  const [userEmail, setUserEmail] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function getProfileData() {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (user) {
+          setUserEmail(user.email);
+          
+          const { data, error } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("id", user.id)
+            .single();
+
+          if (!error && data) {
+            setProfile(data);
+          }
+        }
+      } catch (err) {
+        console.error("Profile yuklashda xatolik:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getProfileData();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/login");
+  };
+
+  const userXP = profile?.xp_points || 0;
   const currentLevel =
     userXP >= 2000 ? "Senior" : userXP >= 800 ? "Middle" : "Junior";
+  const displayName = profile?.full_name || userEmail.split("@")[0] || "O'quvchi";
 
   return (
     <div className="dashboard-wrapper">
@@ -30,17 +70,26 @@ function Dashboard({ user }) {
             <span className="menu-icon">🏆</span> <span>Reyting</span>
           </Link>
         </nav>
+
+        <div className="sidebar-footer">
+          <div className="user-brief-info">
+            <span className="user-name-text">{displayName}</span>
+            <span className="user-email-text">{userEmail}</span>
+          </div>
+          <button onClick={handleLogout} className="btn-logout-sidebar">
+            🚪 Chiqish
+          </button>
+        </div>
       </aside>
 
-      {/* ASOSIY KONTENT */}
       <main className="main-content">
         <header className="top-banner">
           <div className="welcome-text">
-            <h1>Salom, {user?.name || "O'quvchi"}! 👋</h1>
+            <h1>Salom, {loading ? "..." : displayName}! 👋</h1>
             <p>Bugun qaysi texnologiyani zabt etamiz?</p>
           </div>
           <div className="user-avatar-circle">
-            {user?.name?.charAt(0).toUpperCase() || "U"}
+            {displayName.charAt(0).toUpperCase()}
           </div>
         </header>
 
@@ -48,24 +97,22 @@ function Dashboard({ user }) {
           <div className="info-card">
             <span className="info-icon">✅</span>
             <div className="info-data">
-              <span className="info-value">
-                {user?.completedLessons?.length || 0}
-              </span>
-              <span className="info-label">Tugatildi</span>
+              <span className="info-value">0</span>
+              <span className="info-label">Tugatilgan darslar</span>
             </div>
           </div>
           <div className="info-card">
             <span className="info-icon">⚡</span>
             <div className="info-data">
-              <span className="info-value">{userXP}</span>
-              <span className="info-label">Jami XP</span>
+              <span className="info-value">{userXP} XP</span>
+              <span className="info-label">Jami Natija</span>
             </div>
           </div>
           <div className="info-card">
             <span className="info-icon">👑</span>
             <div className="info-data">
               <span className="info-value">{currentLevel}</span>
-              <span className="info-label">Daraja</span>
+              <span className="info-label">Bosqich Darajasi</span>
             </div>
           </div>
         </section>
@@ -77,7 +124,7 @@ function Dashboard({ user }) {
               <span className="tag-badge tag-beginner">Boshlang'ich</span>
               <h3>Python Dasturlash</h3>
               <p>AI va Backend olamiga eng yaxshi kirish tili.</p>
-              <Link to="/course/2" className="btn-start-now">
+              <Link to="/courses" className="btn-start-now">
                 Boshlash
               </Link>
             </div>
@@ -86,7 +133,7 @@ function Dashboard({ user }) {
               <span className="tag-badge tag-middle">O'rta</span>
               <h3>TypeScript Master</h3>
               <p>JS loyihalaringizni xatosiz va professional yozing.</p>
-              <Link to="/course/4" className="btn-start-now">
+              <Link to="/courses" className="btn-start-now">
                 Boshlash
               </Link>
             </div>
@@ -94,10 +141,8 @@ function Dashboard({ user }) {
             <div className="custom-course-card">
               <span className="tag-badge tag-professional">Professional</span>
               <h3>SQL Ma'lumotlar Bazasi</h3>
-              <p>
-                Ma'lumotlar bilan ishlashni professional darajada o'rganing.
-              </p>
-              <Link to="/course/5" className="btn-start-now">
+              <p>Ma'lumotlar bilan ishlashni professional darajada o'rganing.</p>
+              <Link to="/courses" className="btn-start-now">
                 Boshlash
               </Link>
             </div>
@@ -106,7 +151,7 @@ function Dashboard({ user }) {
               <span className="tag-badge tag-speed">Yuqori tezlik</span>
               <h3>Go (Golang) tili</h3>
               <p>Google yaratgan eng tezkor backend tili bilan tanishing.</p>
-              <Link to="/course/6" className="btn-start-now">
+              <Link to="/courses" className="btn-start-now">
                 Boshlash
               </Link>
             </div>
