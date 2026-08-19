@@ -59,3 +59,18 @@ export async function getLessonById(lessonId) {
     return null
   }
 }
+
+export const getLeaderboard = async (limit = 10) => {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("id, full_name, avatar_url, xp_points")
+    .order("xp_points", { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error("Error fetching leaderboard:", error);
+    return [];
+  }
+
+  return data;
+};
