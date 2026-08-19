@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { 
+  FiHome, 
+  FiBookOpen, 
+  FiCode, 
+  FiAward, 
+  FiCheckCircle, 
+  FiZap, 
+  FiCrown, 
+  FiLogOut 
+} from "react-icons/fi";
 import { supabase } from "../../lib/supabaseClient";
 import "./Dashboard.css";
 
@@ -58,16 +68,16 @@ function Dashboard() {
 
         <nav className="sidebar-menu">
           <Link to="/dashboard" className="menu-item active">
-            <span className="menu-icon">🏠</span> <span>Boshqaruv</span>
+            <FiHome className="menu-icon" /> <span>Boshqaruv</span>
           </Link>
           <Link to="/courses" className="menu-item">
-            <span className="menu-icon">📚</span> <span>Kurslar</span>
+            <FiBookOpen className="menu-icon" /> <span>Kurslar</span>
           </Link>
           <Link to="/editor" className="menu-item">
-            <span className="menu-icon">💻</span> <span>Editor</span>
+            <FiCode className="menu-icon" /> <span>Editor</span>
           </Link>
           <Link to="/leaderboard" className="menu-item">
-            <span className="menu-icon">🏆</span> <span>Reyting</span>
+            <FiAward className="menu-icon" /> <span>Reyting</span>
           </Link>
         </nav>
 
@@ -77,7 +87,7 @@ function Dashboard() {
             <span className="user-email-text">{userEmail}</span>
           </div>
           <button onClick={handleLogout} className="btn-logout-sidebar">
-            🚪 Chiqish
+            <FiLogOut size={16} /> Chiqish
           </button>
         </div>
       </aside>
@@ -95,21 +105,29 @@ function Dashboard() {
 
         <section className="stats-container">
           <div className="info-card">
-            <span className="info-icon">✅</span>
+            <div className="icon-wrapper icon-green">
+              <FiCheckCircle size={22} />
+            </div>
             <div className="info-data">
               <span className="info-value">0</span>
               <span className="info-label">Tugatilgan darslar</span>
             </div>
           </div>
+
           <div className="info-card">
-            <span className="info-icon">⚡</span>
+            <div className="icon-wrapper icon-amber">
+              <FiZap size={22} />
+            </div>
             <div className="info-data">
               <span className="info-value">{userXP} XP</span>
               <span className="info-label">Jami Natija</span>
             </div>
           </div>
+
           <div className="info-card">
-            <span className="info-icon">👑</span>
+            <div className="icon-wrapper icon-purple">
+              <FiCrown size={22} />
+            </div>
             <div className="info-data">
               <span className="info-value">{currentLevel}</span>
               <span className="info-label">Bosqich Darajasi</span>
