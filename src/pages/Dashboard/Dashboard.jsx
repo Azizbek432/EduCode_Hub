@@ -7,7 +7,7 @@ import {
   FiAward, 
   FiCheckCircle, 
   FiZap, 
-  FiCrown, 
+  FiTrendingUp, 
   FiLogOut 
 } from "react-icons/fi";
 import { supabase } from "../../lib/supabaseClient";
@@ -126,7 +126,7 @@ function Dashboard() {
 
           <div className="info-card">
             <div className="icon-wrapper icon-purple">
-              <FiCrown size={22} />
+              <FiTrendingUp size={22} />
             </div>
             <div className="info-data">
               <span className="info-value">{currentLevel}</span>
