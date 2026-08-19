@@ -11,6 +11,7 @@ import Courses from "./pages/Courses/Courses";
 import CourseDetail from "./pages/CourseDetail/CourseDetail";
 import Editor from "./pages/Editor/Editor";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
+import NotFound from "./pages/NotFound/NotFound";
 import "./App.css";
 
 function App() {
@@ -109,7 +110,7 @@ function App() {
         <Route path="/lesson/:id" element={<LessonView session={session} profile={profile} />} />
         <Route path="/editor" element={<Editor />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
