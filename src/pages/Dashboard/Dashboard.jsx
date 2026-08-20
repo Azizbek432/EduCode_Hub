@@ -17,6 +17,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [userEmail, setUserEmail] = useState("");
+  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,8 +26,10 @@ function Dashboard() {
         const { data: { user } } = await supabase.auth.getUser();
 
         if (user) {
-          setUserEmail(user.email);
+          setUserEmail(user.email || "");
           
+          const metaName = user.user_metadata?.full_name || user.user_metadata?.name;
+
           const { data, error } = await supabase
             .from("profiles")
             .select("*")
@@ -35,6 +38,9 @@ function Dashboard() {
 
           if (!error && data) {
             setProfile(data);
+            setFullName(data.full_name || metaName || user.email?.split("@")[0]);
+          } else {
+            setFullName(metaName || user.email?.split("@")[0]);
           }
         } else {
           navigate("/login");
@@ -57,7 +63,7 @@ function Dashboard() {
   const userXP = profile?.xp_points || 0;
   const currentLevel =
     userXP >= 2000 ? "Senior" : userXP >= 800 ? "Middle" : "Junior";
-  const displayName = profile?.full_name || userEmail.split("@")[0] || "O'quvchi";
+  const displayName = fullName || "Dasturchi";
 
   return (
     <div className="dashboard-page">
@@ -173,7 +179,6 @@ function Dashboard() {
             </div>
           </section>
         </main>
-
       </div>
     </div>
   );

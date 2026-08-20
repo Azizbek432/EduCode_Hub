@@ -1,35 +1,8 @@
-import { useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom"; // <a> o'rniga Link ishlashimiz kerak
+import { Link } from "react-router-dom";
 import "./Home.css";
 
 function Home() {
-  const [code, setCode] = useState("print('Salom, Yosh Muhandis!')");
-  const [output, setOutput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  const runCode = async () => {
-    setIsLoading(true);
-    setIsError(false);
-    setOutput("");
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/code/run", {
-        code: code,
-      });
-      setOutput(response.data.output);
-      setIsError(response.data.error);
-    } catch (error) {
-      console.error(error);
-      setOutput("Xatolik: Backend bilan aloqa yo'q!");
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    /* KERAKLI JOYI: Fragment (<>) o'rniga 'home-page' klassli div qo'shdik */
     <div className="home-page">
       <section className="hero">
         <div className="hero-content">
@@ -42,13 +15,12 @@ function Home() {
             qulay platforma. Hoziroq kod yozishni boshlang!
           </p>
           <div className="hero-btns">
-            {/* Link ishlatish sahifa yangilanmasligini ta'minlaydi */}
             <Link to="/register" className="hero-btn-primary">
               Bepul boshlash →
             </Link>
-            <a href="#editor" className="hero-btn-secondary">
-              Editorni ko'rish
-            </a>
+            <Link to="/editor" className="hero-btn-secondary">
+              Editorni sinab ko'rish
+            </Link>
           </div>
           <div className="hero-stats">
             <div className="stat">
@@ -82,32 +54,6 @@ def salom(ism):
 print(salom("Yosh Muhandis"))
 # → Salom, Yosh Muhandis!`}</pre>
           </div>
-        </div>
-      </section>
-
-      <section className="editor-section-wrapper" id="editor">
-        <div className="container">
-          <h2 className="section-title">Online Python Editor</h2>
-          <p className="section-subtitle">
-            Hech narsa o'rnatmasdan brauzerda kod yozing
-          </p>
-          <div className="editor-section">
-            <textarea
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              spellCheck="false"
-              disabled={isLoading}
-            />
-            <button className="run-btn" onClick={runCode} disabled={isLoading}>
-              {isLoading ? "Ishlamoqda..." : "Kodni ishga tushirish ▶"}
-            </button>
-          </div>
-          {output && (
-            <div className={`output-box ${isError ? "output-error" : ""}`}>
-              <strong>{isError ? "Xatolik:" : "Natija:"}</strong>
-              <pre>{output}</pre>
-            </div>
-          )}
         </div>
       </section>
 
@@ -146,7 +92,7 @@ print(salom("Yosh Muhandis"))
           </div>
         </div>
       </section>
-    </div> /* home-page div yopildi */
+    </div>
   );
 }
 
