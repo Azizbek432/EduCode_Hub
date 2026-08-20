@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { supabase } from "./lib/supabaseClient";
-import LessonView from "./pages/LessonView/LessonView";
 import Navbar from "./components/Navbar/Navbar";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
@@ -110,7 +109,6 @@ function App() {
             />
             <Route path="/courses" element={<Courses user={session?.user} />} />
             <Route path="/courses/:slug" element={<CourseDetail session={session} profile={profile} />} />
-            <Route path="/lesson/:id" element={<LessonView session={session} profile={profile} />} />
             <Route path="/editor" element={<Compiler />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="*" element={<NotFound />} />

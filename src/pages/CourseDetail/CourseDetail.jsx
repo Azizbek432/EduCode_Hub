@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getCourseBySlug, getLessonsByCourseId } from "../../services/courseService";
+import { getCourseBySlug } from "../../services/courseService";
 import "./CourseDetail.css";
 
 function CourseDetail() {
@@ -11,28 +11,41 @@ function CourseDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+    
     const fetchCourseData = async () => {
       setLoading(true);
-      const courseData = await getCourseBySlug(slug);
-      if (courseData) {
-        setCourse(courseData);
-        const lessonsData = await getLessonsByCourseId(courseData.id);
-        setLessons(lessonsData || []);
-        if (lessonsData && lessonsData.length > 0) {
-          setActiveLesson(lessonsData[0]);
+      try {
+        const courseData = await getCourseBySlug(slug);
+        
+        if (isMounted && courseData) {
+          setCourse(courseData);
+          const courseLessons = courseData.lessons || [];
+          setLessons(courseLessons);
+          
+          if (courseLessons.length > 0) {
+            setActiveLesson(courseLessons[0]);
+          }
         }
+      } catch (error) {
+        console.error("Darslarni yuklashda xatolik:", error);
+      } finally {
+        if (isMounted) setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchCourseData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [slug]);
 
   if (loading) {
     return (
       <div className="course-detail-loading">
         <div className="spinner"></div>
-        <p>Kurs darsliklari yuklanmoqda...</p>
+        <p>Darslar yuklanmoqda...</p>
       </div>
     );
   }
@@ -58,7 +71,7 @@ function CourseDetail() {
         <ul className="lessons-list">
           {lessons.map((lesson, index) => (
             <li
-              key={lesson.id}
+              key={lesson.id || index}
               className={`lesson-item ${activeLesson?.id === lesson.id ? "active" : ""}`}
               onClick={() => setActiveLesson(lesson)}
             >
@@ -78,8 +91,9 @@ function CourseDetail() {
             <div className="video-wrapper">
               {activeLesson.video_url ? (
                 <iframe
-                  src={activeLesson.video_url.replace("watch?v=", "embed/")}
+                  src={activeLesson.video_url}
                   title={activeLesson.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
               ) : (
