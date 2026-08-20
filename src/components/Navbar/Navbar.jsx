@@ -6,18 +6,55 @@ import "./Navbar.css";
 
 function Navbar({ darkMode, toggleDark }) {
   const [user, setUser] = useState(null);
+  const [profileName, setProfileName] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
+    async function fetchUserData(currentUser) {
+      if (!currentUser) {
+        setProfileName("");
+        return;
+      }
+
+      const metaName = currentUser.user_metadata?.full_name || currentUser.user_metadata?.name;
+
+      try {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("full_name")
+          .eq("id", currentUser.id)
+          .single();
+
+        if (!error && data?.full_name) {
+          setProfileName(data.full_name);
+        } else if (metaName) {
+          setProfileName(metaName);
+        } else {
+          setProfileName(currentUser.email?.split("@")[0] || "Foydalanuvchi");
+        }
+      } catch (err) {
+        console.error("Profile yuklashda xatolik:", err);
+        setProfileName(metaName || currentUser.email?.split("@")[0] || "Foydalanuvchi");
+      }
+    }
+
     async function getInitialSession() {
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user || null);
+      if (session?.user) {
+        fetchUserData(session.user);
+      }
     }
 
     getInitialSession();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user || null);
+      if (session?.user) {
+        fetchUserData(session.user);
+      } else {
+        setProfileName("");
+      }
     });
 
     return () => {
@@ -28,10 +65,11 @@ function Navbar({ darkMode, toggleDark }) {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    setProfileName("");
     navigate("/login");
   };
 
-  const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Foydalanuvchi";
+  const displayName = profileName || "Foydalanuvchi";
 
   return (
     <nav className="navbar">
