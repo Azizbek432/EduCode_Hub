@@ -9,7 +9,7 @@ import Home from "./pages/Home/Home";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Courses from "./pages/Courses/Courses";
 import CourseDetail from "./pages/CourseDetail/CourseDetail";
-import Editor from "./pages/Editor/Editor";
+import Compiler from "./pages/Compiler/Compiler";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import NotFound from "./pages/NotFound/NotFound";
 import "./App.css";
@@ -105,10 +105,10 @@ function App() {
           path="/dashboard" 
           element={session ? <Dashboard session={session} profile={profile} /> : <Navigate to="/login" replace />} 
         />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/course/:id" element={<CourseDetail session={session} profile={profile} />} />
+        <Route path="/courses" element={<Courses user={session?.user} />} />
+        <Route path="/courses/:slug" element={<CourseDetail session={session} profile={profile} />} />
         <Route path="/lesson/:id" element={<LessonView session={session} profile={profile} />} />
-        <Route path="/editor" element={<Editor />} />
+        <Route path="/editor" element={<Compiler />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
