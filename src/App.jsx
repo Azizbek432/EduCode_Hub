@@ -12,6 +12,7 @@ import CourseDetail from "./pages/CourseDetail/CourseDetail";
 import Compiler from "./pages/Compiler/Compiler";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
 import NotFound from "./pages/NotFound/NotFound";
+import Footer from "./components/Footer/Footer";
 import "./App.css";
 
 function App() {
@@ -83,35 +84,41 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar
-        darkMode={darkMode}
-        toggleDark={() => setDarkMode(!darkMode)}
-        session={session}
-        profile={profile}
-      />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route 
-          path="/register" 
-          element={session ? <Navigate to="/dashboard" replace /> : <Register />} 
-        />
-        <Route 
-          path="/login" 
-          element={session ? <Navigate to="/dashboard" replace /> : <Login />} 
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <Navbar
+          darkMode={darkMode}
+          toggleDark={() => setDarkMode(!darkMode)}
+          session={session}
+          profile={profile}
         />
 
-        <Route 
-          path="/dashboard" 
-          element={session ? <Dashboard session={session} profile={profile} /> : <Navigate to="/login" replace />} 
-        />
-        <Route path="/courses" element={<Courses user={session?.user} />} />
-        <Route path="/courses/:slug" element={<CourseDetail session={session} profile={profile} />} />
-        <Route path="/lesson/:id" element={<LessonView session={session} profile={profile} />} />
-        <Route path="/editor" element={<Compiler />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+        <main style={{ flex: 1 }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route 
+              path="/register" 
+              element={session ? <Navigate to="/dashboard" replace /> : <Register />} 
+            />
+            <Route 
+              path="/login" 
+              element={session ? <Navigate to="/dashboard" replace /> : <Login />} 
+            />
+
+            <Route 
+              path="/dashboard" 
+              element={session ? <Dashboard session={session} profile={profile} /> : <Navigate to="/login" replace />} 
+            />
+            <Route path="/courses" element={<Courses user={session?.user} />} />
+            <Route path="/courses/:slug" element={<CourseDetail session={session} profile={profile} />} />
+            <Route path="/lesson/:id" element={<LessonView session={session} profile={profile} />} />
+            <Route path="/editor" element={<Compiler />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }
