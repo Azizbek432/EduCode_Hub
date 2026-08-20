@@ -1,9 +1,9 @@
-.compiler-page {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 70px);
-  background-color: #0b1437;
-  overflow: hidden;
+.compiler-page,
+.compiler-container {
+  padding-top: 90px !important; 
+  min-height: calc(100vh - 90px);
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .compiler-header {
