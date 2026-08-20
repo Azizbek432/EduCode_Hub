@@ -7,6 +7,8 @@ function Compiler() {
   );
   const [output, setOutput] = useState("");
 
+  const lineNumbers = code.split("\n").map((_, index) => index + 1).join("\n");
+
   const runCode = () => {
     let logs = [];
     const customConsole = {
@@ -18,13 +20,13 @@ function Compiler() {
             )
             .join(" ")
         ),
-      error: (err) => logs.push("❌ Xatolik: " + err),
+      error: (err) => logs.push("❌ " + err),
     };
 
     try {
       const script = new Function("console", code);
       script(customConsole);
-      setOutput(logs.join("\n") || "⚡️ Kod muvaffaqiyatli bajarildi (natija yo'q).");
+      setOutput(logs.join("\n") || "⚡️ Kod muvaffaqiyatli bajarildi (hech qanday console chiqmaydi).");
     } catch (err) {
       setOutput("❌ Xatolik: " + err.message);
     }
@@ -44,7 +46,9 @@ function Compiler() {
           <span className="filename">⚡️ main.js — EduCode Playground</span>
         </div>
         <div className="compiler-actions">
-          <button className="clear-btn" onClick={clearOutput}>Tozalash</button>
+          <button className="clear-btn" onClick={clearOutput}>
+            Tozalash
+          </button>
           <button className="compile-run-btn" onClick={runCode}>
             Kodni ishga tushirish ▶
           </button>
@@ -53,6 +57,7 @@ function Compiler() {
 
       <div className="compiler-body">
         <div className="editor-side">
+          <div className="line-numbers">{lineNumbers}</div>
           <textarea
             value={code}
             onChange={(e) => setCode(e.target.value)}
@@ -64,10 +69,12 @@ function Compiler() {
 
         <div className="output-side">
           <div className="output-label">
-            <span>Terminal / Console</span>
-            <span className="status-indicator">Online</span>
+            <span>TERMINAL / CONSOLE</span>
+            <span className="status-indicator">ONLINE</span>
           </div>
-          <pre className="output-screen">{output || "// Natija shu yerda ko'rinadi..."}</pre>
+          <pre className="output-screen">
+            {output || "// Natija shu yerda ko'rinadi..."}
+          </pre>
         </div>
       </div>
     </div>
