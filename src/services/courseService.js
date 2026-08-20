@@ -1,18 +1,21 @@
-import { supabase } from '../lib/supabaseClient'
+import { supabase } from '../lib/supabaseClient';
 
 export async function getCourses() {
   try {
     const { data, error } = await supabase
       .from('courses')
       .select('*')
-      .eq('is_published', true)
-      .order('created_at', { ascending: true })
+      .order('created_at', { ascending: true });
 
-    if (error) throw error
-    return data || []
+    if (error) {
+      console.error('Supabase kurslarni olishda xatolik:', error.message);
+      return [];
+    }
+
+    return data || [];
   } catch (err) {
-    console.error('Kurslarni olishda xatolik:', err.message)
-    return []
+    console.error('Kurslarni olishda kutilmagan xatolik:', err);
+    return [];
   }
 }
 
@@ -22,25 +25,27 @@ export async function getCourseBySlug(slug) {
       .from('courses')
       .select('*')
       .eq('slug', slug)
-      .single()
+      .single();
 
-    if (courseError || !course) return null
+    if (courseError || !course) return null;
 
     const { data: lessons, error: lessonsError } = await supabase
       .from('lessons')
       .select('*')
       .eq('course_id', course.id)
-      .order('order_index', { ascending: true })
+      .order('order_index', { ascending: true });
 
-    if (lessonsError) throw lessonsError
+    if (lessonsError) {
+      console.error('Darslarni olishda xatolik:', lessonsError.message);
+    }
 
     return {
       ...course,
       lessons: lessons || []
-    }
+    };
   } catch (err) {
-    console.error('Kurs detalini olishda xatolik:', err.message)
-    return null
+    console.error('Kurs detalini olishda xatolik:', err.message);
+    return null;
   }
 }
 
@@ -50,13 +55,13 @@ export async function getLessonsByCourseId(courseId) {
       .from('lessons')
       .select('*')
       .eq('course_id', courseId)
-      .order('order_index', { ascending: true })
+      .order('order_index', { ascending: true });
 
-    if (error) throw error
-    return data || []
+    if (error) throw error;
+    return data || [];
   } catch (err) {
-    console.error('Darslarni olishda xatolik:', err.message)
-    return []
+    console.error('Darslarni olishda xatolik:', err.message);
+    return [];
   }
 }
 
@@ -66,27 +71,32 @@ export async function getLessonById(lessonId) {
       .from('lessons')
       .select('*')
       .eq('id', lessonId)
-      .single()
+      .single();
 
-    if (error) throw error
-    return data
+    if (error) throw error;
+    return data;
   } catch (err) {
-    console.error('Darsni olishda xatolik:', err.message)
-    return null
+    console.error('Darsni olishda xatolik:', err.message);
+    return null;
   }
 }
 
 export const getLeaderboard = async (limit = 10) => {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("id, full_name, avatar_url, xp_points")
-    .order("xp_points", { ascending: false })
-    .limit(limit);
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, full_name, avatar_url, xp_points")
+      .order("xp_points", { ascending: false })
+      .limit(limit);
 
-  if (error) {
-    console.error("Error fetching leaderboard:", error);
+    if (error) {
+      console.error("Error fetching leaderboard:", error.message);
+      return [];
+    }
+
+    return data || [];
+  } catch (err) {
+    console.error("Leaderboard xatoligi:", err);
     return [];
   }
-
-  return data;
 };
