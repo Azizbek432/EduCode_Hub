@@ -1,61 +1,115 @@
-import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { getCourseBySlug } from '../../services/courseService'
-import './CourseDetail.css'
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { getCourseBySlug, getLessonsByCourseId } from "../../services/courseService";
+import "./CourseDetail.css";
 
-export default function CourseDetail() {
-  const { slug } = useParams()
-  const [course, setCourse] = useState(null)
-  const [loading, setLoading] = useState(true)
+function CourseDetail() {
+  const { slug } = useParams();
+  const [course, setCourse] = useState(null);
+  const [lessons, setLessons] = useState([]);
+  const [activeLesson, setActiveLesson] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCourse = async () => {
-      setLoading(true)
-      const data = await getCourseBySlug(slug)
-      setCourse(data)
-      setLoading(false)
-    }
-    fetchCourse()
-  }, [slug])
+    const fetchCourseData = async () => {
+      setLoading(true);
+      const courseData = await getCourseBySlug(slug);
+      if (courseData) {
+        setCourse(courseData);
+        const lessonsData = await getLessonsByCourseId(courseData.id);
+        setLessons(lessonsData || []);
+        if (lessonsData && lessonsData.length > 0) {
+          setActiveLesson(lessonsData[0]);
+        }
+      }
+      setLoading(false);
+    };
 
-  if (loading) return <div className="loading-spinner">Darslar yuklanmoqda...</div>
-  if (!course) return <div className="no-courses">Kurs topilmadi!</div>
+    fetchCourseData();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="course-detail-loading">
+        <div className="spinner"></div>
+        <p>Kurs darsliklari yuklanmoqda...</p>
+      </div>
+    );
+  }
+
+  if (!course) {
+    return (
+      <div className="course-not-found">
+        <h2>Kurs topilmadi 😕</h2>
+        <Link to="/courses" className="back-btn">← Kurslarga qaytish</Link>
+      </div>
+    );
+  }
 
   return (
-    <div className="course-detail-container">
-      <div className="course-detail-header">
-        <h1>{course.title}</h1>
-        <p>{course.description}</p>
-        <div className="course-tags">
-          <span className="author-tag">Muallif: {course.author || 'EduCode Hub'}</span>
-          <span className="level-tag">Daraja: {course.level}</span>
+    <div className="course-detail-page">
+      <aside className="lessons-sidebar">
+        <div className="sidebar-header">
+          <Link to="/courses" className="back-link">← Barcha kurslar</Link>
+          <h2>{course.title}</h2>
+          <span className="lessons-count">Darslar: {lessons.length} ta</span>
         </div>
-      </div>
 
-      <div className="lessons-list-section">
-        <h2>Darslar ro'yxati ({course.lessons?.length || 0})</h2>
-        <div className="lessons-grid">
-          {course.lessons && course.lessons.length > 0 ? (
-            course.lessons.map((lesson, index) => (
-              <div key={lesson.id} className="lesson-item-card">
-                <div className="lesson-number">{index + 1}</div>
-                <div className="lesson-info">
-                  <h4>{lesson.title}</h4>
-                  <p>{lesson.description || "Amaliy topshiriqlar va video darslik."}</p>
-                  {lesson.duration_minutes > 0 && (
-                    <span className="lesson-duration">⏱ {lesson.duration_minutes} daqiqa</span>
-                  )}
+        <ul className="lessons-list">
+          {lessons.map((lesson, index) => (
+            <li
+              key={lesson.id}
+              className={`lesson-item ${activeLesson?.id === lesson.id ? "active" : ""}`}
+              onClick={() => setActiveLesson(lesson)}
+            >
+              <span className="lesson-number">{index + 1}</span>
+              <div className="lesson-info">
+                <h4>{lesson.title}</h4>
+                <span className="lesson-duration">⏱ {lesson.duration || "10 min"}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      <main className="lesson-content-area">
+        {activeLesson ? (
+          <div className="active-lesson-container">
+            <div className="video-wrapper">
+              {activeLesson.video_url ? (
+                <iframe
+                  src={activeLesson.video_url.replace("watch?v=", "embed/")}
+                  title={activeLesson.title}
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <div className="no-video">
+                  <span>🎥 Ushbu dars uchun video yuklanmagan</span>
                 </div>
-                <Link to={`/courses/${course.slug}/lessons/${lesson.id}`} className="watch-btn">
-                  Tomosha qilish ▶
+              )}
+            </div>
+
+            <div className="lesson-details">
+              <h1>{activeLesson.title}</h1>
+              <div className="lesson-body-text">
+                <p>{activeLesson.content || "Dars bo'yicha qo'shimcha izoh mavjud emas."}</p>
+              </div>
+
+              <div className="lesson-actions">
+                <Link to="/editor" className="practice-btn">
+                  ⚡️ Kod redaktorida amalda sinash
                 </Link>
               </div>
-            ))
-          ) : (
-            <p>Ushbu kursga hali darslar qo'shilmagan.</p>
-          )}
-        </div>
-      </div>
+            </div>
+          </div>
+        ) : (
+          <div className="no-active-lesson">
+            <p>Darsni ko'rish uchun ro'yxatdan birortasini tanlang.</p>
+          </div>
+        )}
+      </main>
     </div>
-  )
+  );
 }
+
+export default CourseDetail;
