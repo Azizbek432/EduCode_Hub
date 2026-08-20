@@ -1,64 +1,188 @@
-export const coursesData = {
-  1: {
+export const coursesData = [
+  {
+    id: "javascript-asoslari",
+    slug: "javascript-asoslari",
     title: "JavaScript Asoslari",
-    description:
-      "Web-dasturlashning yuragi bo'lgan JS tilini noldan o'rganing.",
+    description: "Noldan boshlab JavaScript dasturlash tilini mukammal o'rganing.",
+    category: "Frontend",
+    image: "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=800&auto=format&fit=crop&q=60",
     lessons: [
-      { id: "js1", title: "Kirish va O'rnatish", videoId: "lfMGAtm214U" },
-      { id: "js2", title: "O'zgaruvchilar (let, const)", videoId: "H9K1O3jC0I0" },
-      { id: "js3", title: "Ma'lumot turlari va Operatolar", videoId: "ahCwqrYak30" },
-      { id: "js4", title: "Funksiyalar (Functions)", videoId: "gI3Lbd333-Q" },
-      { id: "js5", title: "Array va Object", videoId: "123x3cM_wMo" },
-    ],
+      {
+        id: "js-1",
+        title: "1. Kirish va O'rnatish",
+        duration: "12 min",
+        youtube_id: "HD13eq_Pzs8",
+        description: "JavaScript tili haqida tushuncha va birinchi kodingizni yozish."
+      },
+      {
+        id: "js-2",
+        title: "2. O'zgaruvchilar (let, const, var)",
+        duration: "15 min",
+        youtube_id: "a-_0XipBf1U",
+        description: "O'zgaruvchilar va ma'lumotlarni xotirada saqlash usullari."
+      },
+      {
+        id: "js-3",
+        title: "3. Ma'lumot turlari va Operatorlar",
+        duration: "18 min",
+        youtube_id: "8dWL3wF_OMw",
+        description: "Data types, primitiv va no-primitiv turlar, arifmetik operatorlar."
+      },
+      {
+        id: "js-4",
+        title: "4. Funksiyalar (Functions)",
+        duration: "20 min",
+        youtube_id: "gigtS1Xrqwc",
+        description: "Funksiya e'lon qilish, parametrlar va qaytariluvchi qiymatlar."
+      },
+      {
+        id: "js-5",
+        title: "5. Array va Object'lar",
+        duration: "25 min",
+        youtube_id: "13gLB6h5iOM",
+        description: "Massivlar va obyektlar bilan ishlash asoslari."
+      }
+    ]
   },
-  2: {
-    title: "Python Dasturlash",
-    description: "Sun'iy intellekt va Backend uchun eng mashhur til.",
+  {
+    id: "react-js-darslari",
+    slug: "react-js-darslari",
+    title: "React JS Zamonaviy Darslar",
+    description: "React.js, Component, State, Props va Hooks texnologiyalarini o'rganing.",
+    category: "Frontend",
+    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=60",
     lessons: [
-      { id: "py1", title: "Python Kirish", videoId: "XKHEtdqhLK8" },
-      { id: "py2", title: "O'zgaruvchilar va Ma'lumot turlari", videoId: "IX2beS-KsmE" },
-      { id: "py3", title: "Sikl va Shartlar (If / Loops)", videoId: "PqFKRqpHrXw" },
-      { id: "py4", title: "Funksiyalar va Listlar", videoId: "X133_N813X0" },
-      { id: "py5", title: "OOP Asoslari", videoId: "ay-O_AAn22g" },
-    ],
+      {
+        id: "react-1",
+        title: "1. React ga Kirish va Vite",
+        duration: "15 min",
+        youtube_id: "CgkZ7MvWUAA",
+        description: "React arxitekturasi va loyihani tezkor ishga tushirish."
+      },
+      {
+        id: "react-2",
+        title: "2. Components & Props",
+        duration: "22 min",
+        youtube_id: "w7ejDZ8SWv8",
+        description: "Komponentlar yaratish va prop orqali ma'lumot uzatish."
+      },
+      {
+        id: "react-3",
+        title: "3. useState & useEffect Hooks",
+        duration: "25 min",
+        youtube_id: "O6P86uwfdR0",
+        description: "React hook'lari va holatlarni boshqarish."
+      }
+    ]
   },
-  3: {
-    title: "React.js Framework",
-    description: "Zamonaviy Front-end ilovalar yaratish texnologiyasi.",
+  {
+    id: "golang-backend-darslari",
+    slug: "golang-backend-darslari",
+    title: "Go (Golang) Dasturlash Tili",
+    description: "Yuqori unumdorlikka ega backend tizimlar yaratish uchun Go tilini o'rganing.",
+    category: "Backend",
+    image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800&auto=format&fit=crop&q=60",
     lessons: [
-      { id: "re1", title: "React nima va loyiha ochish", videoId: "CgkZ7MvWUAA" },
-      { id: "re2", title: "Component va Card yaratish", videoId: "aUbdP_Bf9Q0" },
-      { id: "re3", title: "Props va Conditional Rendering", videoId: "8a4S8T1h6uA" },
-      { id: "re4", title: "useState Hook", videoId: "lAW1Jmmr9xc" },
-      { id: "re5", title: "onChange va Color Picker App", videoId: "t2ypxI-_n30" },
-    ],
+      {
+        id: "go-1",
+        title: "1. Go ga Kirish va Muhitni Sozlash",
+        duration: "14 min",
+        youtube_id: "YS4e4q9oBaU",
+        description: "Golang xususiyatlari va birinchi 'Hello World' dasturi."
+      },
+      {
+        id: "go-2",
+        title: "2. O'zgaruvchilar va Structs",
+        duration: "20 min",
+        youtube_id: "un6ZyFkqFKo",
+        description: "Go tilida ma'lumot tiplari va ma'lumotlar tuzilmasi."
+      },
+      {
+        id: "go-3",
+        title: "3. Goroutines va Channels",
+        duration: "30 min",
+        youtube_id: "f6kdp27TYZA",
+        description: "Asinxron va parallel dasturlash asoslari."
+      }
+    ]
   },
-  4: {
-    title: "TypeScript Master",
-    description:
-      "JavaScript-ni qat'iy tiplashtirilgan va xatosiz yozishni o'rganing.",
+  {
+    id: "python-asoslari",
+    slug: "python-asoslari",
+    title: "Python Dasturlash Tili",
+    description: "Noldan boshlab sun'iy intellekt va backend uchun eng ommabop tilni o'rganing.",
+    category: "Backend",
+    image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800&auto=format&fit=crop&q=60",
     lessons: [
-      { id: "ts1", title: "TypeScriptga kirish", videoId: "d56mG7DezGs" },
-      { id: "ts2", title: "Types va Explicit Typing", videoId: "BCg4U1vX97E" },
-      { id: "ts3", title: "Interface va Objects", videoId: "zQnBQ4tB3ZA" },
-    ],
+      {
+        id: "py-1",
+        title: "1. Python ga Kirish",
+        duration: "10 min",
+        youtube_id: "xk4_1vDrnnw",
+        description: "Python sintaksisi va muhitni o'rnatish."
+      },
+      {
+        id: "py-2",
+        title: "2. Shart Operatorlari (If/Else)",
+        duration: "16 min",
+        youtube_id: "PqFKRqpHrXw",
+        description: "Mantiqiy shartlar va tarmoqlanuvchi dasturlar."
+      },
+      {
+        id: "py-3",
+        title: "3. Sikllar (For va While)",
+        duration: "18 min",
+        youtube_id: "6iF8Xb7Z3wQ",
+        description: "Takrorlanuvchi jarayonlar va massivlar ustida amallar."
+      }
+    ]
   },
-  5: {
-    title: "SQL Ma'lumotlar Bazasi",
-    description: "Ma'lumotlarni saqlash va boshqarishni o'rganing.",
+  {
+    id: "cpp-dasturlash",
+    slug: "cpp-dasturlash",
+    title: "C++ Dasturlash Asoslari",
+    description: "Kompyuter xotirasi, algoritm va 2D o'yinlar yaratish uchun C++ tili.",
+    category: "Fullstack",
+    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&auto=format&fit=crop&q=60",
     lessons: [
-      { id: "sql1", title: "Ma'lumotlar bazasi va Tables", videoId: "HXV3zeQKqGY" },
-      { id: "sql2", title: "SELECT, WHERE va Filters", videoId: "7S_zhMdf_gI" },
-      { id: "sql3", title: "INSERT, UPDATE, DELETE", videoId: "N1S6pEThX08" },
-    ],
+      {
+        id: "cpp-1",
+        title: "1. C++ ga Kirish va Kompilyatsiya",
+        duration: "15 min",
+        youtube_id: "-TkoO8Z07hI",
+        description: "C++ tilining ishlash prinsipi va ilk loyiha."
+      },
+      {
+        id: "cpp-2",
+        title: "2. Ko'rsatkichlar (Pointers) va References",
+        duration: "25 min",
+        youtube_id: "2ybLD6_2gKM",
+        description: "Xotira manzillari bilan to'g'ridan-to mezoniy ishlash."
+      }
+    ]
   },
-  6: {
-    title: "Go (Golang) tili",
-    description: "Google tomonidan yaratilgan eng tezkor Backend tili.",
+  {
+    id: "node-js-backend",
+    slug: "node-js-backend",
+    title: "Node.js & Express.js",
+    description: "JavaScript yordamida tezkor backend REST API va serverlar yaratish.",
+    category: "Backend",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60",
     lessons: [
-      { id: "go1", title: "Go-ga xush kelibsiz va Setup", videoId: "un6ZyFkqFKo" },
-      { id: "go2", title: "Variables va Data Types", videoId: "ysS_y15G3L8" },
-      { id: "go3", title: "Functions va Slices", videoId: "f6kdp27TYFE" },
-    ],
-  },
-};
+      {
+        id: "node-1",
+        title: "1. Node.js nima va NPM",
+        duration: "14 min",
+        youtube_id: "TlB_eWDSMt4",
+        description: "JavaScript run-time muhiti va paketlar menedjeri."
+      },
+      {
+        id: "node-2",
+        title: "2. Express.js REST API yaratish",
+        duration: "22 min",
+        youtube_id: "L72fhGm1tfE",
+        description: "Server va routelar yaratish."
+      }
+    ]
+  }
+];

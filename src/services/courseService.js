@@ -1,46 +1,36 @@
 import { coursesData } from "../data/courses";
 
 export async function getCourses() {
-  return Object.keys(coursesData).map((id) => {
-    const course = coursesData[id];
-    const slug = course.title
-      .toLowerCase()
-      .replace(/[^a-z0-9 ]/g, "")
-      .replace(/\s+/g, "-");
-
-    return {
-      id,
-      title: course.title,
-      slug: slug,
-      description: course.description,
-      category: course.title.split(" ")[0],
-      level: "Boshlang'ich",
-      lessonsCount: course.lessons ? course.lessons.length : 0,
-    };
-  });
+  return coursesData.map((course) => ({
+    id: course.id,
+    title: course.title,
+    slug: course.slug,
+    description: course.description,
+    category: course.category || course.title.split(" ")[0],
+    level: "Boshlang'ich",
+    image: course.image,
+    lessonsCount: course.lessons ? course.lessons.length : 0,
+  }));
 }
 
 export async function getCourseBySlug(slug) {
-  const courses = await getCourses();
-  const matched = courses.find((c) => c.slug === slug);
+  const course = coursesData.find((c) => c.slug === slug);
+  if (!course) return null;
 
-  if (!matched) return null;
-
-  const fullData = coursesData[matched.id];
   return {
-    ...matched,
-    lessons: fullData.lessons || [],
+    ...course,
+    lessonsCount: course.lessons ? course.lessons.length : 0,
   };
 }
 
 export async function getLessonsByCourseId(courseId) {
-  const course = coursesData[courseId];
+  const course = coursesData.find((c) => c.id === courseId);
   return course ? course.lessons : [];
 }
 
 export async function getLessonById(lessonId) {
-  for (const key in coursesData) {
-    const lesson = coursesData[key].lessons.find((l) => l.id === lessonId);
+  for (const course of coursesData) {
+    const lesson = course.lessons.find((l) => l.id === lessonId);
     if (lesson) return lesson;
   }
   return null;
