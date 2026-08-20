@@ -41,6 +41,27 @@ function CourseDetail() {
     };
   }, [slug]);
 
+  // YouTube URL hosil qiluvchi yordamchi funksiya
+  const getEmbedUrl = (lesson) => {
+    if (!lesson) return null;
+    
+    // 1. Agar youtube_id berilgan bo'lsa (Masalan: "videoId123")
+    if (lesson.youtube_id) {
+      return `https://www.youtube.com/embed/${lesson.youtube_id}`;
+    }
+    
+    // 2. Agar video_url yoki videoUrl berilgan bo'lsa
+    const rawUrl = lesson.video_url || lesson.videoUrl;
+    if (rawUrl) {
+      if (rawUrl.includes("embed/")) return rawUrl;
+      if (rawUrl.includes("watch?v=")) return rawUrl.replace("watch?v=", "embed/");
+      if (rawUrl.includes("youtu.be/")) return rawUrl.replace("youtu.be/", "www.youtube.com/embed/");
+      return `https://www.youtube.com/embed/${rawUrl}`;
+    }
+
+    return null;
+  };
+
   if (loading) {
     return (
       <div className="course-detail-loading">
@@ -58,6 +79,8 @@ function CourseDetail() {
       </div>
     );
   }
+
+  const embedVideoUrl = getEmbedUrl(activeLesson);
 
   return (
     <div className="course-detail-page">
@@ -89,9 +112,9 @@ function CourseDetail() {
         {activeLesson ? (
           <div className="active-lesson-container">
             <div className="video-wrapper">
-              {activeLesson.video_url ? (
+              {embedVideoUrl ? (
                 <iframe
-                  src={activeLesson.video_url}
+                  src={embedVideoUrl}
                   title={activeLesson.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -106,7 +129,7 @@ function CourseDetail() {
             <div className="lesson-details">
               <h1>{activeLesson.title}</h1>
               <div className="lesson-body-text">
-                <p>{activeLesson.content || "Dars bo'yicha qo'shimcha izoh mavjud emas."}</p>
+                <p>{activeLesson.content || activeLesson.description || "Dars bo'yicha qo'shimcha izoh mavjud emas."}</p>
               </div>
 
               <div className="lesson-actions">
