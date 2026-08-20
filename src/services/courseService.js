@@ -44,6 +44,22 @@ export async function getCourseBySlug(slug) {
   }
 }
 
+export async function getLessonsByCourseId(courseId) {
+  try {
+    const { data, error } = await supabase
+      .from('lessons')
+      .select('*')
+      .eq('course_id', courseId)
+      .order('order_index', { ascending: true })
+
+    if (error) throw error
+    return data || []
+  } catch (err) {
+    console.error('Darslarni olishda xatolik:', err.message)
+    return []
+  }
+}
+
 export async function getLessonById(lessonId) {
   try {
     const { data, error } = await supabase
