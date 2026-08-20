@@ -27,7 +27,6 @@ function Dashboard() {
 
         if (user) {
           setUserEmail(user.email || "");
-          
           const metaName = user.user_metadata?.full_name || user.user_metadata?.name;
 
           const { data, error } = await supabase
