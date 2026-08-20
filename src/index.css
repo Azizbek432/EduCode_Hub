@@ -1,30 +1,33 @@
-/* 1. ASOSIY O'ZGARUVCHILAR */
 :root {
   --accent: #6c63ff;
   --accent-bg: rgba(108, 99, 255, 0.1);
   --border: #e2e8f0;
-  --code-bg: #f8fafc;
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
   --text-h: #1a202c;
+  --text-muted: #64748b;
   --mono: "Fira Code", "Courier New", monospace;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   --color-border-danger: #fc8181;
   --color-bg-danger: #fff5f5;
   --color-text-danger: #e53e3e;
+  --navbar-height: 70px;
 }
 
 [data-theme="dark"] {
   --accent: #7c73ff;
   --accent-bg: rgba(124, 115, 255, 0.15);
   --border: #2d3748;
-  --code-bg: #1a202c;
+  --bg-main: #0f1117;
+  --bg-card: #1a202c;
   --text-h: #f7fafc;
+  --text-muted: #a0aec0;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   --color-border-danger: #9b2c2c;
   --color-bg-danger: #2d1515;
   --color-text-danger: #fc8181;
 }
 
-/* 2. UMUMIY RESET */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -32,17 +35,20 @@
 }
 
 body {
-  font-family: "Inter", system-ui, sans-serif;
-  background-color: var(--code-bg);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-main);
   color: var(--text-h);
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease;
   line-height: 1.5;
 }
 
-[data-theme="dark"] body {
-  background-color: #0f1117;
+main,
+.page-container,
+.compiler-page,
+.course-detail-container {
+  margin-top: var(--navbar-height) !important;
+  min-height: calc(100vh - var(--navbar-height));
+  box-sizing: border-box;
 }
 
 .sidebar-logo-link,
@@ -51,25 +57,20 @@ body {
 .sidebar-logo-link:active,
 .sidebar-logo-link:visited {
   text-decoration: none !important;
-  color: transparent !important;
+  color: inherit !important;
   outline: none !important;
   border: none !important;
   display: block;
-}
-
-.sidebar-logo-link {
-  text-decoration: none !important;
-  display: block;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .sidebar-logo {
   font-size: 24px;
   font-weight: 800;
-  color: #ffffff !important;
+  color: var(--text-h) !important;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 }
 
 .sidebar-logo span {
@@ -78,19 +79,16 @@ body {
 
 .sidebar-logo-link:hover .sidebar-logo {
   opacity: 0.9;
-  color: #ffffff !important;
 }
 
 .terminal-container,
 .code-editor {
-  background-color: #1a202c;
+  background-color: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 20px;
   box-shadow: var(--shadow);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .terminal-container:hover {
@@ -99,32 +97,28 @@ body {
   border-color: var(--accent);
 }
 
-[data-theme="dark"] .feature-card,
-[data-theme="dark"] .auth-card {
-  background: #1a202c;
-  border: 1px solid var(--border);
-}
-
-[data-theme="dark"] .auth-header h2 {
-  color: var(--text-h);
-}
-
-[data-theme="dark"] .form-group input {
-  background: #2d3748;
-  border-color: #4a5568;
-  color: var(--text-h);
-}
-
-[data-theme="dark"] .form-group label {
-  color: #a0aec0;
-}
-
 .feature-card,
 .auth-card,
 .course-card {
-  background: var(--bg-card, #ffffff);
+  background: var(--bg-card);
   border-radius: 12px;
   padding: 20px;
   border: 1px solid var(--border);
   transition: all 0.3s ease;
+}
+
+.form-group input {
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  color: var(--text-h);
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 100%;
+}
+
+.form-group label {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
 }
