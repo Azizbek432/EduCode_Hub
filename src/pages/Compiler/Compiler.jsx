@@ -5,7 +5,9 @@ const DEFAULT_TEMPLATES = {
   javascript: `// JavaScript kodingizni yozing...\nconsole.log("Salom, EduCode Hub!");\n\nlet a = 10;\nlet b = 20;\nconsole.log("Natija:", a + b);`,
   python: `# Python kodingizni yozing...\nprint("Salom, EduCode Hub!")\n\na = 10\nb = 20\nprint("Natija:", a + b)`,
   cpp: `// C++ kodingizni yozing...\n#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Salom, EduCode Hub!" << endl;\n    int a = 10, b = 20;\n    cout << "Natija: " << a + b << endl;\n    return 0;\n}`,
-  html: `<!-- HTML/CSS kodingizni yozing -->\n<div style="padding: 20px; color: #40c9ff;">\n  <h1>Salom, EduCode Hub!</h1>\n  <p>Dasturlashni qulay muhitda o'rganing.</p>\n</div>`
+  go: `// Go (Golang) kodingizni yozing...\npackage main\nimport "fmt"\n\nfunc main() {\n    fmt.Println("Salom, EduCode Hub!")\n    a, b := 10, 20\n    fmt.Println("Natija:", a+b)\n}`,
+  typescript: `// TypeScript kodingizni yozing...\nconst message: string = "Salom, EduCode Hub!";\nconsole.log(message);\n\nconst a: number = 10;\nconst b: number = 20;\nconsole.log("Natija:", a + b);`,
+  html: `<!-- HTML/CSS kodingizni yozing -->\n<div style="padding: 20px; color: #40c9ff; font-family: sans-serif;">\n  <h1>Salom, EduCode Hub!</h1>\n  <p>Dasturlashni qulay muhitda o'rganing.</p>\n</div>`
 };
 
 function Compiler() {
@@ -23,7 +25,7 @@ function Compiler() {
 
   const lineNumbers = code.split("\n").map((_, index) => index + 1).join("\n");
 
-  const runJavaScript = () => {
+  const runJavaScriptLocally = () => {
     let logs = [];
     const customConsole = {
       log: (...args) => logs.push(args.map(a => typeof a === "object" ? JSON.stringify(a, null, 2) : String(a)).join(" ")),
@@ -69,13 +71,17 @@ function Compiler() {
   const runCode = () => {
     setOutput("");
     if (language === "javascript") {
-      runJavaScript();
+      runJavaScriptLocally();
     } else if (language === "python") {
       runPistonApi("python", "3.10.0");
     } else if (language === "cpp") {
       runPistonApi("cpp", "10.2.0");
+    } else if (language === "go") {
+      runPistonApi("go", "1.16.2");
+    } else if (language === "typescript") {
+      runPistonApi("typescript", "5.0.3");
     } else if (language === "html") {
-      setOutput("HTML mode active");
+      setOutput("HTML Mode Active");
     }
   };
 
@@ -91,9 +97,11 @@ function Compiler() {
             <span className="dot green"></span>
           </div>
           <select className="language-select" value={language} onChange={handleLanguageChange}>
-            <option value="javascript">JavaScript (Node.js/Browser)</option>
+            <option value="javascript">JavaScript (Browser/Node)</option>
+            <option value="typescript">TypeScript</option>
             <option value="python">Python 3</option>
             <option value="cpp">C++ (GCC)</option>
+            <option value="go">Go (Golang)</option>
             <option value="html">HTML / Preview</option>
           </select>
         </div>
