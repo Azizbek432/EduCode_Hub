@@ -25,7 +25,16 @@ function Login() {
       await loginUser(formData.email, formData.password);
       navigate("/dashboard");
     } catch (err) {
-      setError(err.message || "Email yoki parol xato!");
+      const errMsg = err.message || "";
+      if (errMsg.toLowerCase().includes("email not confirmed")) {
+        setError(
+          "Emailingiz hali tasdiqlanmagan! Iltimos, pochtangizga borgan xatni tekshiring yoki yangi hisob oching."
+        );
+      } else if (errMsg.toLowerCase().includes("invalid login credentials")) {
+        setError("Email yoki parol noto'g'ri kiritildi!");
+      } else {
+        setError(errMsg || "Tizimga kirishda kutilmagan xatolik yuz berdi.");
+      }
     } finally {
       setIsLoading(false);
     }

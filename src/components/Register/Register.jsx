@@ -34,7 +34,9 @@ function Register() {
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: `${window.location.origin}/login`,
+          data: {
+            full_name: formData.fullName,
+          },
         },
       });
 
@@ -44,11 +46,14 @@ function Register() {
       }
 
       if (data?.user) {
-        const { error: profileError } = await supabase.from("profiles").upsert({
-          id: data.user.id,
-          full_name: formData.fullName,
-          xp_points: 0,
-        });
+        const { error: profileError } = await supabase.from("profiles").upsert(
+          {
+            id: data.user.id,
+            full_name: formData.fullName,
+            xp_points: 0,
+          },
+          { onConflict: "id" }
+        );
 
         if (profileError) {
           console.error("Supabase Profile Insert Error Details:", profileError);
@@ -58,7 +63,12 @@ function Register() {
       navigate("/dashboard");
     } catch (err) {
       console.error("Register Error Catch:", err);
-      setError(err.message || JSON.stringify(err));
+      const errMsg = err.message || "";
+      if (errMsg.toLowerCase().includes("user already registered")) {
+        setError("Bu email orqali allaqachon ro'yxatdan o'tilgan!");
+      } else {
+        setError(errMsg || "Ro'yxatdan o'tishda xatolik yuz berdi.");
+      }
     } finally {
       setIsLoading(false);
     }
