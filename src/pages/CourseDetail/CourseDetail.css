@@ -1,11 +1,16 @@
 .course-detail-page {
-  display: flex !important;
-  height: 100vh !important;
-  width: 100% !important;
-  background-color: #0b1437 !important;
-  color: #ffffff !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
+  display: flex;
+  height: calc(100vh - 70px);
+  width: 100%;
+  background-color: #0b1437;
+  color: #ffffff;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.mobile-header {
+  display: none;
 }
 
 .lessons-sidebar {
@@ -15,6 +20,8 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  z-index: 100;
+  transition: transform 0.3s ease;
 }
 
 .sidebar-header {
@@ -27,8 +34,24 @@
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin-bottom: 10px;
+}
+
+.sidebar-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-drawer-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
 }
 
 .sidebar-header h2 {
@@ -85,6 +108,11 @@
   flex-shrink: 0;
 }
 
+.lesson-number.completed {
+  background: #22c55e;
+  color: #ffffff;
+}
+
 .lesson-item.active .lesson-number {
   background: #6c63ff;
   color: #ffffff;
@@ -100,6 +128,9 @@
 .lesson-duration {
   font-size: 12px;
   color: #a3aed0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .lesson-content-area {
@@ -141,7 +172,7 @@
 
 .lesson-details {
   margin-top: 20px;
-  text-align: center;
+  text-align: left;
 }
 
 .lesson-details h1 {
@@ -158,7 +189,11 @@
 }
 
 .lesson-actions {
-  margin-top: 20px;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .practice-btn {
@@ -167,7 +202,7 @@
   gap: 8px;
   background: #6c63ff;
   color: #ffffff !important;
-  padding: 12px 24px;
+  padding: 12px 22px;
   border-radius: 10px;
   text-decoration: none !important;
   font-weight: 600;
@@ -179,4 +214,112 @@
 .practice-btn:hover {
   background: #5b52e0;
   transform: translateY(-2px);
+}
+
+.complete-lesson-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #22c55e;
+  color: #ffffff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.complete-lesson-btn:hover {
+  background: #16a34a;
+  transform: translateY(-2px);
+}
+
+.complete-lesson-btn.completed {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  box-shadow: none;
+  cursor: default;
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .course-detail-page {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - 70px);
+    padding-bottom: 70px;
+  }
+
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #111c44;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-course-title {
+    font-size: 15px;
+    margin: 0;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+
+  .mobile-back-btn, .mobile-list-trigger {
+    background: transparent;
+    border: none;
+    color: #a3aed0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .lessons-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 80%;
+    max-width: 300px;
+    background: #111c44;
+    transform: translateX(100%);
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+  }
+
+  .lessons-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .close-drawer-btn {
+    display: block;
+  }
+
+  .lesson-content-area {
+    padding: 16px;
+  }
+
+  .lesson-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .practice-btn, .complete-lesson-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 90;
+  }
 }

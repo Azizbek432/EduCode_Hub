@@ -1,41 +1,91 @@
-import { coursesData } from "../data/courses";
+import { supabase } from "../lib/supabaseClient";
 
 export async function getCourses() {
-  return coursesData.map((course) => ({
-    id: course.id,
-    title: course.title,
-    slug: course.slug,
-    description: course.description,
-    category: course.category || course.title.split(" ")[0],
-    level: "Boshlang'ich",
-    image: course.image,
+  const { data, error } = await supabase
+    .from("courses")
+    .select(`
+      *,
+      lessons (id)
+    `)
+    .eq("is_published", true);
+
+  if (error) {
+    console.error("getCourses xatolik:", error);
+    return [];
+  }
+
+  return data.map((course) => ({
+    ...course,
     lessonsCount: course.lessons ? course.lessons.length : 0,
   }));
 }
 
 export async function getCourseBySlug(slug) {
-  const course = coursesData.find((c) => c.slug === slug);
-  if (!course) return null;
+  const { data, error } = await supabase
+    .from("courses")
+    .select(`
+      *,
+      lessons (*)
+    `)
+    .eq("slug", slug)
+    .single();
+
+  if (error) {
+    console.error("getCourseBySlug xatolik:", error);
+    return null;
+  }
+
+  if (data && data.lessons) {
+    data.lessons.sort((a, b) => (a.order_index || 0) - (b.order_index || 0));
+  }
 
   return {
-    ...course,
-    lessonsCount: course.lessons ? course.lessons.length : 0,
+    ...data,
+    lessonsCount: data.lessons ? data.lessons.length : 0,
   };
 }
 
 export async function getLessonsByCourseId(courseId) {
-  const course = coursesData.find((c) => c.id === courseId);
-  return course ? course.lessons : [];
+  const { data, error } = await supabase
+    .from("lessons")
+    .select("*")
+    .eq("course_id", courseId)
+    .order("order_index", { ascending: true });
+
+  if (error) {
+    console.error("getLessonsByCourseId xatolik:", error);
+    return [];
+  }
+
+  return data;
 }
 
 export async function getLessonById(lessonId) {
-  for (const course of coursesData) {
-    const lesson = course.lessons.find((l) => l.id === lessonId);
-    if (lesson) return lesson;
+  const { data, error } = await supabase
+    .from("lessons")
+    .select("*")
+    .eq("id", lessonId)
+    .single();
+
+  if (error) {
+    console.error("getLessonById xatolik:", error);
+    return null;
   }
-  return null;
+
+  return data;
 }
 
 export const getLeaderboard = async () => {
-  return [];
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("id, full_name, username, avatar_url, xp_points")
+    .order("xp_points", { ascending: false })
+    .limit(10);
+
+  if (error) {
+    console.error("getLeaderboard xatolik:", error);
+    return [];
+  }
+
+  return data;
 };
