@@ -1,48 +1,77 @@
 import { supabase } from "../lib/supabaseClient";
 
 export async function getCourses() {
-  const { data, error } = await supabase
-    .from("courses")
-    .select(`
-      *,
-      lessons (id)
-    `)
-    .eq("is_published", true);
+  try {
+    const { data: courses, error: coursesError } = await supabase
+      .from("courses")
+      .select("*");
 
-  if (error) {
-    console.error("getCourses xatolik:", error);
+    if (coursesError) {
+      console.error("getCourses kurslarni olishda xatolik:", coursesError);
+      return [];
+    }
+
+    if (!courses || courses.length === 0) {
+      return [];
+    }
+
+    const { data: lessons, error: lessonsError } = await supabase
+      .from("lessons")
+      .select("id, course_id");
+
+    if (lessonsError) {
+      console.error("getCourses darslarni olishda xatolik:", lessonsError);
+    }
+
+    const publishedCourses = courses.filter(
+      (course) => course.is_published === true || course.is_published === null
+    );
+
+    return publishedCourses.map((course) => {
+      const courseLessons = lessons ? lessons.filter((l) => l.course_id === course.id) : [];
+      return {
+        ...course,
+        lessonsCount: courseLessons.length,
+      };
+    });
+  } catch (err) {
+    console.error("getCourses kutilmagan xatolik:", err);
     return [];
   }
-
-  return data.map((course) => ({
-    ...course,
-    lessonsCount: course.lessons ? course.lessons.length : 0,
-  }));
 }
 
 export async function getCourseBySlug(slug) {
-  const { data, error } = await supabase
-    .from("courses")
-    .select(`
-      *,
-      lessons (*)
-    `)
-    .eq("slug", slug)
-    .single();
+  try {
+    const { data: course, error: courseError } = await supabase
+      .from("courses")
+      .select("*")
+      .eq("slug", slug)
+      .maybeSingle();
 
-  if (error) {
-    console.error("getCourseBySlug xatolik:", error);
+    if (courseError || !course) {
+      console.error("getCourseBySlug xatolik:", courseError);
+      return null;
+    }
+
+    const { data: lessons, error: lessonsError } = await supabase
+      .from("lessons")
+      .select("*")
+      .eq("course_id", course.id)
+      .order("order_index", { ascending: true });
+
+    if (lessonsError) {
+      console.error("getCourseBySlug darslarda xatolik:", lessonsError);
+    }
+
+    return {
+      ...course,
+      lessons: lessons || [],
+      lessonsCount: lessons ? lessons.length : 0,
+    };
+  } catch (err) {
+    console.error("getCourseBySlug kutilmagan xatolik:", err);
     return null;
   }
-
-  if (data && data.lessons) {
-    data.lessons.sort((a, b) => (a.order_index || 0) - (b.order_index || 0));
-  }
-
-  return {
-    ...data,
-    lessonsCount: data.lessons ? data.lessons.length : 0,
-  };
 }
 
 export async function getLessonsByCourseId(courseId) {
@@ -57,7 +86,7 @@ export async function getLessonsByCourseId(courseId) {
     return [];
   }
 
-  return data;
+  return data || [];
 }
 
 export async function getLessonById(lessonId) {
@@ -65,7 +94,7 @@ export async function getLessonById(lessonId) {
     .from("lessons")
     .select("*")
     .eq("id", lessonId)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error("getLessonById xatolik:", error);
@@ -87,5 +116,5 @@ export const getLeaderboard = async () => {
     return [];
   }
 
-  return data;
+  return data || [];
 };
