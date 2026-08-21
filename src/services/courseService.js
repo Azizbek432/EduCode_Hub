@@ -1,26 +1,9 @@
 import { supabase } from "../lib/supabaseClient";
+import { coursesData } from "../data/courses"; 
 
 export async function getCourses() {
   try {
-    const { data: courses, error: coursesError } = await supabase
-      .from("courses")
-      .select("*, lessons(id)")
-      .order("created_at", { ascending: true });
-
-    if (coursesError) {
-      console.error("getCourses kurslarni olishda xatolik:", coursesError);
-      return [];
-    }
-
-    if (!courses || courses.length === 0) {
-      return [];
-    }
-
-    const publishedCourses = courses.filter(
-      (course) => course.is_published === true || course.is_published === null
-    );
-
-    return publishedCourses.map((course) => ({
+    return coursesData.map((course) => ({
       ...course,
       lessonsCount: course.lessons ? course.lessons.length : 0,
     }));
@@ -32,25 +15,16 @@ export async function getCourses() {
 
 export async function getCourseBySlug(slug) {
   try {
-    const { data: course, error: courseError } = await supabase
-      .from("courses")
-      .select("*, lessons(*)")
-      .eq("slug", slug)
-      .maybeSingle();
+    const course = coursesData.find((c) => c.slug === slug || c.id === slug);
 
-    if (courseError || !course) {
-      console.error("getCourseBySlug xatolik:", courseError);
+    if (!course) {
+      console.error("getCourseBySlug: Kurs topilmadi:", slug);
       return null;
     }
 
-    const sortedLessons = course.lessons
-      ? course.lessons.sort((a, b) => (a.order_index || 0) - (b.order_index || 0))
-      : [];
-
     return {
       ...course,
-      lessons: sortedLessons,
-      lessonsCount: sortedLessons.length,
+      lessonsCount: course.lessons ? course.lessons.length : 0,
     };
   } catch (err) {
     console.error("getCourseBySlug kutilmagan xatolik:", err);
@@ -60,18 +34,8 @@ export async function getCourseBySlug(slug) {
 
 export async function getLessonsByCourseId(courseId) {
   try {
-    const { data, error } = await supabase
-      .from("lessons")
-      .select("*")
-      .eq("course_id", courseId)
-      .order("order_index", { ascending: true });
-
-    if (error) {
-      console.error("getLessonsByCourseId xatolik:", error);
-      return [];
-    }
-
-    return data || [];
+    const course = coursesData.find((c) => c.id === courseId || c.slug === courseId);
+    return course ? course.lessons || [] : [];
   } catch (err) {
     console.error("getLessonsByCourseId kutilmagan xatolik:", err);
     return [];
@@ -80,18 +44,11 @@ export async function getLessonsByCourseId(courseId) {
 
 export async function getLessonById(lessonId) {
   try {
-    const { data, error } = await supabase
-      .from("lessons")
-      .select("*")
-      .eq("id", lessonId)
-      .maybeSingle();
-
-    if (error) {
-      console.error("getLessonById xatolik:", error);
-      return null;
+    for (const course of coursesData) {
+      const lesson = course.lessons.find((l) => l.id === lessonId);
+      if (lesson) return lesson;
     }
-
-    return data;
+    return null;
   } catch (err) {
     console.error("getLessonById kutilmagan xatolik:", err);
     return null;

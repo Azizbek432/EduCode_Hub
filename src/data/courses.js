@@ -1,5 +1,232 @@
 export const coursesData = [
   {
+    id: "react-devlog-marafon",
+    slug: "react-devlog-marafon",
+    title: "React.js + Tailwind CSS Devlog Marafon",
+    description: "30 kunlik amaliy React.js va Tailwind CSS marafonining barcha devlog videolari va o'rganish yo'li.",
+    category: "Frontend",
+    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=60",
+    lessons: [
+      {
+        id: "devlog-0",
+        title: "001. Men Qaytdim! 🔥 14 yoshli Dasturchining o'rganish yo'li (Devlog #0)",
+        duration: "10 min",
+        youtube_id: "tJQ3ZoOMG08",
+        description: "Devlog #0 qismi."
+      },
+      {
+        id: "devlog-1",
+        title: "002. React.js va Birinchi Komponentimiz! 🚀 Dokumentatsiya bilan ishlash (Devlog #1)",
+        duration: "10 min",
+        youtube_id: "RY_G9TrD7Tk",
+        description: "Devlog #1 qismi."
+      },
+      {
+        id: "devlog-2",
+        title: "003. React.js loyihaga Tailwind CSS o'rnatish! 🚀 Zamonaviy dizayn poydevori (Devlog #2)",
+        duration: "10 min",
+        youtube_id: "Lag9p3cO59k",
+        description: "Devlog #2 qismi."
+      },
+      {
+        id: "devlog-3",
+        title: "004. Katta E'lon: 30 kunlik Marafon! 🔥 Loyihani TypeScript-ga o'tkazamiz (Devlog #3)",
+        duration: "10 min",
+        youtube_id: "TjCB3nBXOCg",
+        description: "Devlog #3 qismi."
+      },
+      {
+        id: "devlog-4",
+        title: "005. Tailwind CSS Xatosini 2 daqiqada Yechdik! 🛠️ (Devlog #4)",
+        duration: "10 min",
+        youtube_id: "Yc0eeDEi2tI",
+        description: "Devlog #4 qismi."
+      },
+      {
+        id: "devlog-5",
+        title: "006. React Props tushuntirish va Loyihani To'g'rilash! 🚀 (Devlog #5)",
+        duration: "10 min",
+        youtube_id: "LvgVO-lvLY4",
+        description: "Devlog #5 qismi."
+      },
+      {
+        id: "devlog-6",
+        title: "007. React \"useState\" va Kutilmagan Xatoliklar! 🤯 (Devlog #6)",
+        duration: "10 min",
+        youtube_id: "KOui-q-tAJw",
+        description: "Devlog #6 qismi."
+      },
+      {
+        id: "devlog-7",
+        title: "008. Xatoni 1 daqiqada to'g'riladik va 1-haftamizning yakuni! 🎉 (Devlog #7)",
+        duration: "10 min",
+        youtube_id: "XWn8EdJ6Pj0",
+        description: "Devlog #7 qismi."
+      },
+      {
+        id: "devlog-8",
+        title: "009. Loyihani Jonlantiramiz: Tailwind CSS Hover Effekti! ✨ (Devlog #8)",
+        duration: "10 min",
+        youtube_id: "ntucl58s04E",
+        description: "Devlog #8 qismi."
+      },
+      {
+        id: "devlog-9",
+        title: "010. Cardlarni haqiqiy ishlaydigan qildik va interaktiv layklar! ❤️ (Devlog #9)",
+        duration: "10 min",
+        youtube_id: "Lm9sCKUSJho",
+        description: "Devlog #9 qismi."
+      },
+      {
+        id: "devlog-10",
+        title: "011. Marafonimizda YUBILEY! 🥳 Ekstremal Sharoitda Devlog #10 va Yangi Vizual! ⚡",
+        duration: "10 min",
+        youtube_id: "M6o7wx2TTjw",
+        description: "Devlog #10 qismi."
+      },
+      {
+        id: "devlog-11",
+        title: "012. Tailwind v4 dagi Katta O'zgarish va Background Xatosini To'g'rilash! 🛠️ (Devlog #11)",
+        duration: "10 min",
+        youtube_id: "-NspyyUMIBc",
+        description: "Devlog #11 qismi."
+      },
+      {
+        id: "devlog-12",
+        title: "013. ORZUIMDAGI TELEFONNI OLDIM! 😍 + Silliq Animatsiyalar! ✨ (Devlog #12)",
+        duration: "10 min",
+        youtube_id: "rHoHckhIYAc",
+        description: "Devlog #12 qismi."
+      },
+      {
+        id: "devlog-13",
+        title: "014. Komponentlarga Professional Footer Qo'shdik! 📝 (Devlog #13)",
+        duration: "10 min",
+        youtube_id: "aU0NKFeSKuo",
+        description: "Devlog #13 qismi."
+      },
+      {
+        id: "devlog-14",
+        title: "015. SOF REACTDA PROFESSIONAL ROUTING! 10 daqiqada loyihani tubdan o'zgartirdik! (Devlog #14)",
+        duration: "10 min",
+        youtube_id: "JEZB6IVNiaA",
+        description: "Devlog #14 qismi."
+      },
+      {
+        id: "devlog-15",
+        title: "016. NEGA JONLI EFIR (LIVE) QILMAYAPMAN? Marafonning yarmi!🔝🎉 (Devlog #15)",
+        duration: "10 min",
+        youtube_id: "17esR7fwnGU",
+        description: "Devlog #15 qismi."
+      },
+      {
+        id: "devlog-16",
+        title: "017. TAILWIND CSS BILAN PREMIUM UI/UX! Ichki sahifani portlatdik! (Devlog #16)",
+        duration: "10 min",
+        youtube_id: "75Ytl-zDTic",
+        description: "Devlog #16 qismi."
+      },
+      {
+        id: "devlog-17",
+        title: "018. JAVASCRIPT .find() BILAN DYNAMIC DATA! Ichki sahifani jonlantirdik! (Devlog #17)",
+        duration: "10 min",
+        youtube_id: "NORMEyllipg",
+        description: "Devlog #17 qismi."
+      },
+      {
+        id: "devlog-18",
+        title: "019. ERROR 404 INTERFEYSINI YARATDIK! Tailwind CSS Premium UI! (Devlog #18)",
+        duration: "10 min",
+        youtube_id: "kUbEqkoeadg",
+        description: "Devlog #18 qismi."
+      },
+      {
+        id: "devlog-19",
+        title: "020. 2 Daqiqada Haqiqiy Toggle Like Tizimi! | React + Tailwind CSS 🚀(Devlog #19)",
+        duration: "10 min",
+        youtube_id: "IoWi33k4-Jw",
+        description: "Devlog #19 qismi."
+      },
+      {
+        id: "devlog-20",
+        title: "021. 2 Daqiqada Layk Tugmasiga Silliq Animatsiya Berish! | Tailwind CSS 🚀(Devlog #20)",
+        duration: "10 min",
+        youtube_id: "WhQH4KNyvvQ",
+        description: "Devlog #20 qismi."
+      },
+      {
+        id: "devlog-21",
+        title: "022. React Props Nima Va U Necha Daqiqada O'rganiladi? 🚀(Devlog #21)",
+        duration: "10 min",
+        youtube_id: "A7d2gLsU0iE",
+        description: "Devlog #21 qismi."
+      },
+      {
+        id: "devlog-22",
+        title: "023. Reactda State Nima Va U Nega Kerak? (useState Hooki) 🔝🚀(Devlog #22)",
+        duration: "10 min",
+        youtube_id: "N17rm1ExHaM",
+        description: "Devlog #22 qismi."
+      },
+      {
+        id: "devlog-23",
+        title: "024. React Conditional Rendering Nima Va U Qanday Ishlaydi? 🚀(Devlog #23)",
+        duration: "10 min",
+        youtube_id: "gfXPPitRmkg",
+        description: "Devlog #23 qismi."
+      },
+      {
+        id: "devlog-24",
+        title: "025. Reactda .map() va Key Atributi! 🚀(Devlog #24)",
+        duration: "10 min",
+        youtube_id: "B0-i2pTItFE",
+        description: "Devlog #24 qismi."
+      },
+      {
+        id: "devlog-25",
+        title: "026. Reactda Event Handling (Hodisalarni Boshqarish) 🚀(Devlog #25)",
+        duration: "10 min",
+        youtube_id: "v_5yqG4qym4",
+        description: "Devlog #25 qismi."
+      },
+      {
+        id: "devlog-26",
+        title: "027. Reactda Funksiyaga Parametr Uzatish (Callback Funksiyalar) 🚀(Devlog #26)",
+        duration: "10 min",
+        youtube_id: "CfltO8f6FU0",
+        description: "Devlog #26 qismi."
+      },
+      {
+        id: "devlog-27",
+        title: "028. Reactda Massiv Ichidagi Obyektni ID Bo'yicha Yangilash! 🚀(Devlog #27)",
+        duration: "10 min",
+        youtube_id: "YaoeCbE6Hvw",
+        description: "Devlog #27 qismi."
+      },
+      {
+        id: "devlog-28",
+        title: "029. Reactda Children Prop Nima va U Nega Kerak? 🚀(Devlog #28)",
+        duration: "10 min",
+        youtube_id: "swrVlUDCsgc",
+        description: "Devlog #28 qismi."
+      },
+      {
+        id: "devlog-29",
+        title: "030. Reactda Absolute vs Relative Imports Farqi Nima? 🚀(Devlog #29)",
+        duration: "10 min",
+        youtube_id: "sOtC0ux_qNE",
+        description: "Devlog #29 qismi."
+      },
+      {
+        id: "devlog-30",
+        title: "031. 30 KUNLIK REACT MARAFONI FINAL! SARHISOB VA LINUX YANGILIGI! 🚀🔝🎉 (Devlog #30)",
+        duration: "10 min",
+        youtube_id: "81ydrss6laI",
+        description: "Devlog #30 qismi."
+      }
+    ]
+  },
+  {
     id: "javascript-asoslari",
     slug: "javascript-asoslari",
     title: "JavaScript Asoslari",
@@ -157,7 +384,7 @@ export const coursesData = [
         title: "2. Ko'rsatkichlar (Pointers) va References",
         duration: "25 min",
         youtube_id: "2ybLD6_2gKM",
-        description: "Xotira manzillari bilan to'g'ridan-to mezoniy ishlash."
+        description: "Xotira manzillari bilan to'g'ridan-to'g'ri ishlash."
       }
     ]
   },
