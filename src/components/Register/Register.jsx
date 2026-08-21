@@ -30,12 +30,16 @@ function Register() {
     setIsLoading(true);
 
     try {
+      // Username yaratish (Masalan: azizbekabdullayev)
+      const generatedUsername = formData.email.split("@")[0].replace(/[^a-zA-Z0-9_]/g, "");
+
       const { data, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
           data: {
             full_name: formData.fullName,
+            username: generatedUsername,
           },
         },
       });
@@ -46,11 +50,14 @@ function Register() {
       }
 
       if (data?.user) {
+        // Profiles jadvaliga ism, username va boshlang'ich XP ni yozish
         const { error: profileError } = await supabase.from("profiles").upsert(
           {
             id: data.user.id,
             full_name: formData.fullName,
+            username: generatedUsername,
             xp_points: 0,
+            updated_at: new Date().toISOString(),
           },
           { onConflict: "id" }
         );
@@ -105,7 +112,7 @@ function Register() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="azizbekabdullayev3500@gmail.com"
+              placeholder="example@gmail.com"
               required
             />
           </div>

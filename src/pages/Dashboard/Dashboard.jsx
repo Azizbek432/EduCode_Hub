@@ -34,7 +34,7 @@ function Dashboard() {
             .from("profiles")
             .select("*")
             .eq("id", user.id)
-            .single();
+            .maybeSingle();
 
           if (!error && data) {
             setProfile(data);
@@ -61,9 +61,57 @@ function Dashboard() {
   };
 
   const userXP = profile?.xp_points || 0;
-  const currentLevel =
-    userXP >= 2000 ? "Senior" : userXP >= 800 ? "Middle" : "Junior";
+  const completedLessons = profile?.completed_lessons_count || 0;
+
+  const xpPerLevel = 300;
+  const currentLevelNumber = Math.floor(userXP / xpPerLevel) + 1;
+  const currentLevelXP = userXP % xpPerLevel; 
+  const progressPercentage = Math.min(Math.round((currentLevelXP / xpPerLevel) * 100), 100);
+
+  const getRankTitle = (lvl) => {
+    if (lvl >= 12) return "Master 💎";
+    if (lvl >= 7) return "Senior 🥇";
+    if (lvl >= 3) return "Middle 🥈";
+    return "Junior 🥉";
+  };
+
+  const rankTitle = getRankTitle(currentLevelNumber);
   const displayName = fullName || "Dasturchi";
+
+  const recommendedCourses = [
+    {
+      id: "python",
+      title: "Python Dasturlash",
+      description: "AI va Backend olamiga eng yaxshi kirish tili.",
+      badge: "Boshlang'ich",
+      badgeClass: "tag-beginner",
+      link: "/courses/python"
+    },
+    {
+      id: "typescript",
+      title: "TypeScript Master",
+      description: "JS loyihalaringizni xatosiz va professional yozing.",
+      badge: "O'rta",
+      badgeClass: "tag-middle",
+      link: "/courses/typescript"
+    },
+    {
+      id: "sql",
+      title: "SQL Ma'lumotlar Bazasi",
+      description: "Ma'lumotlar bilan ishlashni professional darajada o'rganing.",
+      badge: "Professional",
+      badgeClass: "tag-professional",
+      link: "/courses/sql"
+    },
+    {
+      id: "golang",
+      title: "Go (Golang) tili",
+      description: "Google yaratgan eng tezkor backend tili bilan tanishing.",
+      badge: "Yuqori tezlik",
+      badgeClass: "tag-speed",
+      link: "/courses/golang"
+    }
+  ];
 
   return (
     <div className="dashboard-page">
@@ -109,9 +157,12 @@ function Dashboard() {
                 to="/settings" 
                 className="user-avatar-circle" 
                 title="Sozlamalarga o'tish"
-                style={{ textDecoration: "none" }}
               >
-                {displayName.charAt(0).toUpperCase()}
+                {profile?.avatar_url ? (
+                  <img src={profile.avatar_url} alt={displayName} className="avatar-img" />
+                ) : (
+                  displayName.charAt(0).toUpperCase()
+                )}
               </Link>
             </div>
           </header>
@@ -122,7 +173,7 @@ function Dashboard() {
                 <FiCheckCircle size={22} />
               </div>
               <div className="info-data">
-                <span className="info-value">0</span>
+                <span className="info-value">{completedLessons}</span>
                 <span className="info-label">Tugatilgan darslar</span>
               </div>
             </div>
@@ -141,9 +192,15 @@ function Dashboard() {
               <div className="icon-wrapper icon-purple">
                 <FiTrendingUp size={22} />
               </div>
-              <div className="info-data">
-                <span className="info-value">{currentLevel}</span>
-                <span className="info-label">Bosqich Darajasi</span>
+              <div className="info-data" style={{ width: "100%" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span className="info-value">Lvl {currentLevelNumber}</span>
+                  <span className="rank-badge-inline">{rankTitle}</span>
+                </div>
+                <div className="level-progress-bar">
+                  <div className="level-progress-fill" style={{ width: `${progressPercentage}%` }}></div>
+                </div>
+                <span className="info-label">{currentLevelXP}/{xpPerLevel} XP keyingi darajagacha</span>
               </div>
             </div>
           </section>
@@ -151,41 +208,18 @@ function Dashboard() {
           <section className="course-section">
             <h2 className="section-title">Siz uchun tavsiyalar</h2>
             <div className="dashboard-courses-grid">
-              <div className="custom-course-card">
-                <span className="tag-badge tag-beginner">Boshlang'ich</span>
-                <h3>Python Dasturlash</h3>
-                <p>AI va Backend olamiga eng yaxshi kirish tili.</p>
-                <Link to="/courses" className="btn-start-now">
-                  Boshlash
-                </Link>
-              </div>
-
-              <div className="custom-course-card">
-                <span className="tag-badge tag-middle">O'rta</span>
-                <h3>TypeScript Master</h3>
-                <p>JS loyihalaringizni xatosiz va professional yozing.</p>
-                <Link to="/courses" className="btn-start-now">
-                  Boshlash
-                </Link>
-              </div>
-
-              <div className="custom-course-card">
-                <span className="tag-badge tag-professional">Professional</span>
-                <h3>SQL Ma'lumotlar Bazasi</h3>
-                <p>Ma'lumotlar bilan ishlashni professional darajada o'rganing.</p>
-                <Link to="/courses" className="btn-start-now">
-                  Boshlash
-                </Link>
-              </div>
-
-              <div className="custom-course-card">
-                <span className="tag-badge tag-speed">Yuqori tezlik</span>
-                <h3>Go (Golang) tili</h3>
-                <p>Google yaratgan eng tezkor backend tili bilan tanishing.</p>
-                <Link to="/courses" className="btn-start-now">
-                  Boshlash
-                </Link>
-              </div>
+              {recommendedCourses.map((course) => (
+                <div key={course.id} className="custom-course-card">
+                  <div>
+                    <span className={`tag-badge ${course.badgeClass}`}>{course.badge}</span>
+                    <h3>{course.title}</h3>
+                    <p>{course.description}</p>
+                  </div>
+                  <Link to={course.link} className="btn-start-now">
+                    Boshlash
+                  </Link>
+                </div>
+              ))}
             </div>
           </section>
         </main>

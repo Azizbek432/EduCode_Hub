@@ -55,21 +55,27 @@ function Settings() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
 
-      if (!user) throw new Error("Foydalanuvchi topilmadi. Qayta kirib ko'ring.");
-
-      const { error } = await supabase.from("profiles").upsert({
-        id: user.id,
-        full_name: profile.fullName,
-        username: profile.username,
-        avatar_url: profile.avatarUrl,
-        updated_at: new Date(),
-      });
+      if (!user) throw new Error("Foydalanuvchi topilmadi");
+      
+      const { error } = await supabase
+        .from("profiles")
+        .upsert(
+          {
+            id: user.id,
+            full_name: profile.fullName,
+            username: profile.username,
+            avatar_url: profile.avatarUrl,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "id" }
+        );
 
       if (error) throw error;
-      setMessage({ type: "success", text: "Profil muvaffaqiyatli yangilandi!" });
+
+      setMessage({ type: "success", text: "Profil sozlamalari muvaffaqiyatli saqlandi!" });
     } catch (err) {
-      console.error("Yangilash xatoligi:", err);
-      setMessage({ type: "error", text: `Xatolik: ${err.message || err}` });
+      console.error("Profile update error:", err);
+      setMessage({ type: "error", text: err.message || "Saqlashda xatolik yuz berdi!" });
     } finally {
       setUpdating(false);
     }
@@ -92,6 +98,7 @@ function Settings() {
             value={profile.fullName}
             onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
             placeholder="Ismingizni kiriting"
+            required
           />
         </div>
 
@@ -102,6 +109,7 @@ function Settings() {
             value={profile.username}
             onChange={(e) => setProfile({ ...profile, username: e.target.value })}
             placeholder="username"
+            required
           />
         </div>
 

@@ -227,6 +227,137 @@ export const coursesData = [
     ]
   },
   {
+    id: "python",
+    slug: "python",
+    title: "Python Dasturlash Tili",
+    description: "Noldan boshlab sun'iy intellekt va backend uchun eng ommabop tilni o'rganing.",
+    category: "Backend",
+    image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800&auto=format&fit=crop&q=60",
+    lessons: [
+      {
+        id: "py-1",
+        title: "1. Python ga Kirish va Muhitni O'rnatish",
+        duration: "15 min",
+        youtube_id: "rfscVS0vtbw",
+        description: "Python sintaksisi va muhitni o'rnatish."
+      },
+      {
+        id: "py-2",
+        title: "2. O'zgaruvchilar va Ma'lumot turlari",
+        duration: "18 min",
+        youtube_id: "k9TUPpGqYTo",
+        description: "Python tilidagi asosiy ma'lumot turlari va ulardan foydalanish."
+      },
+      {
+        id: "py-3",
+        title: "3. Shart Operatorlari (If / Else)",
+        duration: "16 min",
+        youtube_id: "PqFKRqpHrXw",
+        description: "Mantiqiy shartlar va tarmoqlanuvchi dasturlar."
+      },
+      {
+        id: "py-4",
+        title: "4. Sikllar (For va While)",
+        duration: "20 min",
+        youtube_id: "6iF8Xb7Z3wQ",
+        description: "Takrorlanuvchi jarayonlar va massivlar ustida amallar."
+      }
+    ]
+  },
+  {
+    id: "typescript",
+    slug: "typescript",
+    title: "TypeScript Master Class",
+    description: "JS loyihalaringizni xatosiz va professional darajada yozishni o'rganing.",
+    category: "Frontend",
+    image: "https://images.unsplash.com/photo-1516116211223-4c7142403677?w=800&auto=format&fit=crop&q=60",
+    lessons: [
+      {
+        id: "ts-1",
+        title: "1. TypeScript ga Kirish va Statik Tiplar",
+        duration: "14 min",
+        youtube_id: "ahCwqrYpIuM",
+        description: "TypeScript nima uchun kerak va asosiy tiplar."
+      },
+      {
+        id: "ts-2",
+        title: "2. Interface va Type Aliases",
+        duration: "20 min",
+        youtube_id: "d56mG7DezGs",
+        description: "Obyekt va strukturani tiplashtirish."
+      },
+      {
+        id: "ts-3",
+        title: "3. Generics va Advanced Types",
+        duration: "22 min",
+        youtube_id: "nViEqvj450U",
+        description: "Moslashuvchan va qayta ishlatiladigan tiplar yaratish."
+      }
+    ]
+  },
+  {
+    id: "sql",
+    slug: "sql",
+    title: "SQL va Ma'lumotlar Bazasi",
+    description: "Relatsion ma'lumotlar bazasi (PostgreSQL, MySQL) bilan ishlash asoslari.",
+    category: "Database",
+    image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&auto=format&fit=crop&q=60",
+    lessons: [
+      {
+        id: "sql-1",
+        title: "1. SQL ga Kirish va Relatsion Baza",
+        duration: "12 min",
+        youtube_id: "HXV3zeQKqGY",
+        description: "Jadvallar, ustunlar va ma'lumotlar strukturasi."
+      },
+      {
+        id: "sql-2",
+        title: "2. SELECT, WHERE va Filtering",
+        duration: "18 min",
+        youtube_id: "7S_tz1z_5bA",
+        description: "So'rovlar yuborish va ma'lumotlarni saralash."
+      },
+      {
+        id: "sql-3",
+        title: "3. JOIN lar bilan Ishlash",
+        duration: "25 min",
+        youtube_id: "9yeOJ0ZMUYw",
+        description: "Bir nechta jadvallarni o'zaro bog'lash."
+      }
+    ]
+  },
+  {
+    id: "golang",
+    slug: "golang",
+    title: "Go (Golang) Dasturlash Tili",
+    description: "Yuqori unumdorlikka ega backend tizimlar yaratish uchun Go tilini o'rganing.",
+    category: "Backend",
+    image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800&auto=format&fit=crop&q=60",
+    lessons: [
+      {
+        id: "go-1",
+        title: "1. Go ga Kirish va Muhitni Sozlash",
+        duration: "14 min",
+        youtube_id: "YS4e4q9oBaU",
+        description: "Golang xususiyatlari va birinchi 'Hello World' dasturi."
+      },
+      {
+        id: "go-2",
+        title: "2. O'zgaruvchilar va Structs",
+        duration: "20 min",
+        youtube_id: "un6ZyFkqFKo",
+        description: "Go tilida ma'lumot tiplari va ma'lumotlar tuzilmasi."
+      },
+      {
+        id: "go-3",
+        title: "3. Goroutines va Channels",
+        duration: "30 min",
+        youtube_id: "f6kdp27TYZA",
+        description: "Asinxron va parallel dasturlash asoslari."
+      }
+    ]
+  },
+  {
     id: "javascript-asoslari",
     slug: "javascript-asoslari",
     title: "JavaScript Asoslari",
@@ -268,99 +399,6 @@ export const coursesData = [
         duration: "25 min",
         youtube_id: "13gLB6h5iOM",
         description: "Massivlar va obyektlar bilan ishlash asoslari."
-      }
-    ]
-  },
-  {
-    id: "react-js-darslari",
-    slug: "react-js-darslari",
-    title: "React JS Zamonaviy Darslar",
-    description: "React.js, Component, State, Props va Hooks texnologiyalarini o'rganing.",
-    category: "Frontend",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=60",
-    lessons: [
-      {
-        id: "react-1",
-        title: "1. React ga Kirish va Vite",
-        duration: "15 min",
-        youtube_id: "CgkZ7MvWUAA",
-        description: "React arxitekturasi va loyihani tezkor ishga tushirish."
-      },
-      {
-        id: "react-2",
-        title: "2. Components & Props",
-        duration: "22 min",
-        youtube_id: "w7ejDZ8SWv8",
-        description: "Komponentlar yaratish va prop orqali ma'lumot uzatish."
-      },
-      {
-        id: "react-3",
-        title: "3. useState & useEffect Hooks",
-        duration: "25 min",
-        youtube_id: "O6P86uwfdR0",
-        description: "React hook'lari va holatlarni boshqarish."
-      }
-    ]
-  },
-  {
-    id: "golang-backend-darslari",
-    slug: "golang-backend-darslari",
-    title: "Go (Golang) Dasturlash Tili",
-    description: "Yuqori unumdorlikka ega backend tizimlar yaratish uchun Go tilini o'rganing.",
-    category: "Backend",
-    image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800&auto=format&fit=crop&q=60",
-    lessons: [
-      {
-        id: "go-1",
-        title: "1. Go ga Kirish va Muhitni Sozlash",
-        duration: "14 min",
-        youtube_id: "YS4e4q9oBaU",
-        description: "Golang xususiyatlari va birinchi 'Hello World' dasturi."
-      },
-      {
-        id: "go-2",
-        title: "2. O'zgaruvchilar va Structs",
-        duration: "20 min",
-        youtube_id: "un6ZyFkqFKo",
-        description: "Go tilida ma'lumot tiplari va ma'lumotlar tuzilmasi."
-      },
-      {
-        id: "go-3",
-        title: "3. Goroutines va Channels",
-        duration: "30 min",
-        youtube_id: "f6kdp27TYZA",
-        description: "Asinxron va parallel dasturlash asoslari."
-      }
-    ]
-  },
-  {
-    id: "python-asoslari",
-    slug: "python-asoslari",
-    title: "Python Dasturlash Tili",
-    description: "Noldan boshlab sun'iy intellekt va backend uchun eng ommabop tilni o'rganing.",
-    category: "Backend",
-    image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=800&auto=format&fit=crop&q=60",
-    lessons: [
-      {
-        id: "py-1",
-        title: "1. Python ga Kirish",
-        duration: "10 min",
-        youtube_id: "xk4_1vDrnnw",
-        description: "Python sintaksisi va muhitni o'rnatish."
-      },
-      {
-        id: "py-2",
-        title: "2. Shart Operatorlari (If/Else)",
-        duration: "16 min",
-        youtube_id: "PqFKRqpHrXw",
-        description: "Mantiqiy shartlar va tarmoqlanuvchi dasturlar."
-      },
-      {
-        id: "py-3",
-        title: "3. Sikllar (For va While)",
-        duration: "18 min",
-        youtube_id: "6iF8Xb7Z3wQ",
-        description: "Takrorlanuvchi jarayonlar va massivlar ustida amallar."
       }
     ]
   },

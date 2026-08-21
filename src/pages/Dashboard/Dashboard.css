@@ -4,9 +4,9 @@
 
 .dashboard-page {
   width: 100%;
-  min-height: 100vh;
-  background-color: #0b132b !important;
-  color: #ffffff !important;
+  min-height: calc(100vh - var(--navbar-height));
+  background-color: var(--bg-main);
+  color: var(--text-h);
   display: flex;
   flex-direction: column;
 }
@@ -21,8 +21,8 @@
 
 .dashboard-sidebar {
   width: 260px;
-  background: #111c44 !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
   padding: 24px 16px;
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #a3aed0 !important;
+  color: var(--text-muted);
   padding: 12px 16px;
   border-radius: 12px;
   transition: all 0.2s ease;
@@ -56,16 +56,16 @@
 
 .menu-item:hover,
 .menu-item.active {
-  background: rgba(108, 99, 255, 0.15) !important;
-  color: #ffffff !important;
+  background: var(--accent-bg);
+  color: var(--accent);
 }
 
 .menu-item.active .menu-icon {
-  color: #6c63ff;
+  color: var(--accent);
 }
 
 .sidebar-footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--border);
   padding-top: 16px;
   display: flex;
   flex-direction: column;
@@ -80,24 +80,23 @@
 }
 
 .user-name-text {
-  color: #ffffff !important;
+  color: var(--text-h);
   font-weight: 600;
   font-size: 14px;
 }
 
 .user-email-text {
-  color: #cbd5e1 !important;
+  color: var(--text-muted);
   font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  opacity: 0.75;
 }
 
 .btn-logout-sidebar {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444 !important;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: var(--color-bg-danger);
+  color: var(--color-text-danger);
+  border: 1px solid var(--color-border-danger);
   padding: 10px;
   border-radius: 10px;
   cursor: pointer;
@@ -111,46 +110,49 @@
 }
 
 .btn-logout-sidebar:hover {
-  background: #ef4444;
-  color: #ffffff !important;
+  background: var(--color-text-danger);
+  color: #ffffff;
 }
 
 .dashboard-main {
   flex: 1;
   padding: 32px;
-  background-color: #0b132b !important;
+  background-color: var(--bg-main);
   overflow-x: hidden;
 }
 
 .top-banner {
-  background: #1c2541 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 16px !important;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
   padding: 24px 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 28px;
+  box-shadow: var(--shadow);
 }
 
 .welcome-text h1 {
-  color: #ffffff !important;
+  color: var(--text-h);
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 6px;
+  text-align: left;
 }
 
 .welcome-text p {
-  color: #a3aed0 !important;
+  color: var(--text-muted);
   font-size: 14px;
   margin: 0;
+  text-align: left;
 }
 
 .user-avatar-circle {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #6c63ff, #4834d4);
+  background: var(--accent);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -158,6 +160,14 @@
   font-size: 20px;
   font-weight: 700;
   flex-shrink: 0;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .stats-container {
@@ -168,13 +178,14 @@
 }
 
 .info-card {
-  background: #1c2541 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 16px !important;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
   padding: 18px 20px;
   display: flex;
   align-items: center;
   gap: 14px;
+  box-shadow: var(--shadow);
 }
 
 .icon-wrapper {
@@ -195,16 +206,16 @@
   display: block;
   font-size: 20px;
   font-weight: 700;
-  color: #ffffff !important;
+  color: var(--text-h);
 }
 
 .info-label {
   font-size: 13px;
-  color: #a3aed0 !important;
+  color: var(--text-muted);
 }
 
 .section-title {
-  color: #ffffff !important;
+  color: var(--text-h);
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 18px;
@@ -217,26 +228,34 @@
 }
 
 .custom-course-card {
-  background: #1c2541 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 16px !important;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.custom-course-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
 }
 
 .custom-course-card h3 {
-  color: #ffffff !important;
+  color: var(--text-h);
   font-size: 17px;
   margin: 12px 0 6px 0;
 }
 
 .custom-course-card p {
-  color: #a3aed0 !important;
+  color: var(--text-muted);
   font-size: 13px;
   margin-bottom: 14px;
   line-height: 1.4;
+  text-align: left;
 }
 
 .tag-badge {
@@ -247,13 +266,13 @@
   font-weight: 600;
 }
 
-.tag-beginner { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-.tag-middle { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-.tag-professional { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
-.tag-speed { background: rgba(249, 115, 22, 0.15); color: #fb923c; }
+.tag-beginner { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+.tag-middle { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.tag-professional { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+.tag-speed { background: rgba(249, 115, 22, 0.15); color: #f97316; }
 
 .btn-start-now {
-  background: #6c63ff !important;
+  background: var(--accent);
   color: #ffffff !important;
   padding: 10px;
   border-radius: 10px;
@@ -261,17 +280,43 @@
   font-weight: 600;
   font-size: 14px;
   text-decoration: none !important;
-  transition: background 0.2s ease;
+  transition: opacity 0.2s ease;
+  display: block;
 }
 
 .btn-start-now:hover {
-  background: #5b52e0 !important;
+  opacity: 0.9;
 }
 
 @media (max-width: 1024px) {
   .dashboard-courses-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+.rank-badge-inline {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.level-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: 4px;
+  margin: 6px 0 4px 0;
+  overflow: hidden;
+}
+
+.level-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 0.3s ease;
 }
 
 @media (max-width: 768px) {
@@ -281,7 +326,7 @@
   .dashboard-sidebar {
     width: 100%;
     border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--border);
   }
   .stats-container {
     grid-template-columns: 1fr;
