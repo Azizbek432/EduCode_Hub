@@ -6,15 +6,18 @@ export async function getCourses() {
     .select(`
       *,
       lessons (id)
-    `)
-    .eq("is_published", true);
+    `);
 
   if (error) {
     console.error("getCourses xatolik:", error);
     return [];
   }
 
-  return data.map((course) => ({
+  const publishedCourses = data.filter(
+    (course) => course.is_published === true || course.is_published === null
+  );
+
+  return publishedCourses.map((course) => ({
     ...course,
     lessonsCount: course.lessons ? course.lessons.length : 0,
   }));
