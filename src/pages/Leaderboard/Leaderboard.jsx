@@ -42,25 +42,32 @@ export default function Leaderboard() {
             </thead>
             <tbody>
               {leaders && leaders.length > 0 ? (
-                leaders.map((user, index) => (
-                  <tr key={user?.id || index} className={index < 3 ? `top-${index + 1}` : ''}>
-                    <td className="rank-cell">
-                      {index === 0 && '🥇'}
-                      {index === 1 && '🥈'}
-                      {index === 2 && '🥉'}
-                      {index > 2 && index + 1}
-                    </td>
-                    <td className="user-cell">
-                      <img 
-                        src={user?.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${user?.id || index}`} 
-                        alt="avatar" 
-                        className="user-avatar"
-                      />
-                      <span className="user-name">{user?.full_name || 'Noma\'lum Dasturchi'}</span>
-                    </td>
-                    <td className="xp-cell">{user?.xp_points || 0} XP</td>
-                  </tr>
-                ))
+                leaders.map((user, index) => {
+                  const displayName = user?.full_name || (user?.username ? `@${user.username}` : 'Noma\'lum Dasturchi');
+                  
+                  return (
+                    <tr key={user?.id || index} className={index < 3 ? `top-${index + 1}` : ''}>
+                      <td className="rank-cell">
+                        {index === 0 && '🥇'}
+                        {index === 1 && '🥈'}
+                        {index === 2 && '🥉'}
+                        {index > 2 && index + 1}
+                      </td>
+                      <td className="user-cell">
+                        <img 
+                          src={user?.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${user?.id || index}`} 
+                          alt="avatar" 
+                          className="user-avatar"
+                        />
+                        <div className="user-info-text">
+                          <span className="user-name">{displayName}</span>
+                          {user?.username && <span className="user-handle">@{user.username}</span>}
+                        </div>
+                      </td>
+                      <td className="xp-cell">{user?.xp_points || 0} XP</td>
+                    </tr>
+                  );
+                })
               ) : (
                 <tr>
                   <td colSpan="3" style={{ textAlign: 'center', padding: '20px' }}>
