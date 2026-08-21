@@ -36,7 +36,7 @@ function Footer() {
               <FiGithub size={18} />
             </a>
             <a
-              href="https://educodehub.vercel.app"
+              href="https://edu-code-hub.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Website"
