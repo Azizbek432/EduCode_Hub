@@ -1,99 +1,231 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getCourses } from "../../services/courseService";
-import { FiBookOpen, FiClock, FiPlayCircle } from "react-icons/fi";
+import { useParams, Link } from "react-router-dom";
+import { FiArrowLeft, FiList, FiCode, FiX, FiClock, FiCheckCircle } from "react-icons/fi";
+import { getCourseBySlug } from "../../services/courseService";
+import { supabase } from "../../lib/supabaseClient";
+import "./CourseDetail.css";
 
-function Courses() {
-  const [courses, setCourses] = useState([]);
+function CourseDetail() {
+  const { slug } = useParams();
+  const [course, setCourse] = useState(null);
+  const [lessons, setLessons] = useState([]);
+  const [activeLesson, setActiveLesson] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isMobileListOpen, setIsMobileListOpen] = useState(false);
+  const [completedLessons, setCompletedLessons] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    async function fetchCourses() {
+    let isMounted = true;
+    
+    const fetchCourseData = async () => {
+      setLoading(true);
       try {
-        const data = await getCourses();
-        setCourses(data);
-      } catch (err) {
-        console.error("Kurslarni yuklashda xatolik:", err);
+        const courseData = await getCourseBySlug(slug);
+        
+        if (isMounted && courseData) {
+          setCourse(courseData);
+          const courseLessons = courseData.lessons || [];
+          setLessons(courseLessons);
+          
+          if (courseLessons.length > 0) {
+            setActiveLesson(courseLessons[0]);
+          }
+        }
+      } catch (error) {
+        console.error("Darslarni yuklashda xatolik:", error);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
+    };
+
+    fetchCourseData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [slug]);
+
+  const getEmbedUrl = (lesson) => {
+    if (!lesson) return null;
+
+    const rawIdOrUrl = 
+      lesson.youtube_id || 
+      lesson.youtubeId || 
+      lesson.video_id || 
+      lesson.videoId || 
+      lesson.video_url || 
+      lesson.videoUrl;
+
+    if (!rawIdOrUrl) return null;
+
+    if (typeof rawIdOrUrl === "string" && rawIdOrUrl.includes("embed/")) {
+      return rawIdOrUrl;
     }
-    fetchCourses();
-  }, []);
+
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = String(rawIdOrUrl).match(regExp);
+
+    const videoId = (match && match[2].length === 11) ? match[2] : rawIdOrUrl;
+
+    return `https://www.youtube.com/embed/${videoId}`;
+  };
+
+  const handleCompleteLesson = async () => {
+    if (!activeLesson || completedLessons[activeLesson.id] || isSubmitting) return;
+    setIsSubmitting(true);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("xp_points")
+          .eq("id", user.id)
+          .single();
+
+        const currentXP = profile?.xp_points || 0;
+        const updatedXP = currentXP + 50;
+
+        await supabase
+          .from("profiles")
+          .update({ xp_points: updatedXP })
+          .eq("id", user.id);
+
+        setCompletedLessons((prev) => ({ ...prev, [activeLesson.id]: true }));
+        alert("Barakalla! Dars tugatildi: +50 EXP 🚀");
+      } else {
+        alert("EXP to'plash uchun tizimga kiring!");
+      }
+    } catch (err) {
+      console.error("EXP berishda xatolik:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (loading) {
     return (
-      <div style={{ textAlign: "center", padding: "50px", color: "#fff" }}>
-        <h2>Kurslar yuklanmoqda...</h2>
+      <div className="course-detail-loading">
+        <div className="spinner"></div>
+        <p>Darslar yuklanmoqda...</p>
       </div>
     );
   }
 
-  return (
-    <div style={{ padding: "40px 20px", maxWidth: "1200px", margin: "0 auto", color: "#fff" }}>
-      <h1 style={{ textAlign: "center", marginBottom: "10px" }}>Xush kelibsiz, Dasturchi! 🚀</h1>
-      <p style={{ textAlign: "center", color: "#a3aed0", marginBottom: "40px" }}>
-        Dasturlash tillarini amaliy video va darsliklar orqali o'rganing
-      </p>
+  if (!course) {
+    return (
+      <div className="course-not-found">
+        <h2>Kurs topilmadi 😕</h2>
+        <Link to="/courses" className="back-btn"><FiArrowLeft /> Kurslarga qaytish</Link>
+      </div>
+    );
+  }
 
-      {courses.length === 0 ? (
-        <div style={{ textAlign: "center", color: "#a3aed0" }}>
-          <p>Hozircha kurslar mavjud emas.</p>
+  const embedVideoUrl = getEmbedUrl(activeLesson);
+  const isCurrentLessonCompleted = activeLesson && completedLessons[activeLesson.id];
+
+  return (
+    <div className="course-detail-page">
+      <div className="mobile-header">
+        <Link to="/courses" className="mobile-back-btn">
+          <FiArrowLeft size={20} />
+        </Link>
+        <h3 className="mobile-course-title">{course.title}</h3>
+        <button className="mobile-list-trigger" onClick={() => setIsMobileListOpen(!isMobileListOpen)}>
+          <FiList size={20} />
+        </button>
+      </div>
+
+      <aside className={`lessons-sidebar ${isMobileListOpen ? "mobile-open" : ""}`}>
+        <div className="sidebar-header">
+          <Link to="/courses" className="back-link"><FiArrowLeft /> Barcha kurslar</Link>
+          <div className="sidebar-title-wrapper">
+            <h2>{course.title}</h2>
+            <button className="close-drawer-btn" onClick={() => setIsMobileListOpen(false)}>
+              <FiX size={20} />
+            </button>
+          </div>
+          <span className="lessons-count">Darslar: {lessons.length} ta</span>
         </div>
-      ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "24px" }}>
-          {courses.map((course) => (
-            <div
-              key={course.id}
-              style={{
-                background: "#111c44",
-                borderRadius: "16px",
-                padding: "20px",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between"
-              }}
-            >
-              <div>
-                <span style={{ fontSize: "12px", background: "rgba(108, 99, 255, 0.2)", color: "#6c63ff", padding: "4px 8px", borderRadius: "6px" }}>
-                  {course.category || "Dasturlash"}
+
+        <ul className="lessons-list">
+          {lessons.map((lesson, index) => {
+            const isCompleted = completedLessons[lesson.id];
+            return (
+              <li
+                key={lesson.id || index}
+                className={`lesson-item ${activeLesson?.id === lesson.id ? "active" : ""}`}
+                onClick={() => {
+                  setActiveLesson(lesson);
+                  setIsMobileListOpen(false);
+                }}
+              >
+                <span className={`lesson-number ${isCompleted ? "completed" : ""}`}>
+                  {isCompleted ? "✓" : index + 1}
                 </span>
-                <h3 style={{ fontSize: "18px", margin: "14px 0 8px 0" }}>{course.title}</h3>
-                <p style={{ fontSize: "13px", color: "#a3aed0", lineHeight: "1.5" }}>
-                  {course.description || "Tavsif mavjud emas."}
-                </p>
+                <div className="lesson-info">
+                  <h4>{lesson.title}</h4>
+                  <span className="lesson-duration"><FiClock size={12} /> {lesson.duration || "10 min"}</span>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </aside>
+
+      <main className="lesson-content-area">
+        {activeLesson ? (
+          <div className="active-lesson-container">
+            <div className="video-wrapper">
+              {embedVideoUrl ? (
+                <iframe
+                  src={embedVideoUrl}
+                  title={activeLesson.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                <div className="no-video">
+                  <span>🎥 Ushbu dars uchun video yuklanmagan</span>
+                </div>
+              )}
+            </div>
+
+            <div className="lesson-details">
+              <h1>{activeLesson.title}</h1>
+              <div className="lesson-body-text">
+                <p>{activeLesson.content || activeLesson.description || "Dars bo'yicha qo'shimcha izoh mavjud emas."}</p>
               </div>
 
-              <div style={{ marginTop: "20px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", color: "#a3aed0", fontSize: "12px", marginBottom: "16px" }}>
-                  <span><FiBookOpen /> {course.lessonsCount || 0} ta dars</span>
-                  <span><FiClock /> {course.level || "Boshlang'ich"}</span>
-                </div>
-                <Link
-                  to={`/courses/${course.slug}`}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                    background: "#6c63ff",
-                    color: "#fff",
-                    textDecoration: "none",
-                    padding: "10px",
-                    borderRadius: "8px",
-                    fontWeight: "600"
-                  }}
-                >
-                  <FiPlayCircle /> Kursni boshlash
+              <div className="lesson-actions">
+                <Link to="/editor" className="practice-btn">
+                  <FiCode size={18} /> Kod muharririda amalda sinash
                 </Link>
+
+                <button
+                  className={`complete-lesson-btn ${isCurrentLessonCompleted ? "completed" : ""}`}
+                  onClick={handleCompleteLesson}
+                  disabled={isCurrentLessonCompleted || isSubmitting}
+                >
+                  <FiCheckCircle size={18} />
+                  {isCurrentLessonCompleted ? "Dars tugatildi (+50 EXP)" : "Darsni tugatish"}
+                </button>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className="no-active-lesson">
+            <p>Darsni ko'rish uchun ro'yxatdan birortasini tanlang.</p>
+          </div>
+        )}
+      </main>
+
+      {isMobileListOpen && (
+        <div className="mobile-overlay" onClick={() => setIsMobileListOpen(false)}></div>
       )}
     </div>
   );
 }
 
-export default Courses;
+export default CourseDetail;
