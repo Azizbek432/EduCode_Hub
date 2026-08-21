@@ -10,6 +10,7 @@ import Courses from "./pages/Courses/Courses";
 import CourseDetail from "./pages/CourseDetail/CourseDetail";
 import Compiler from "./pages/Compiler/Compiler";
 import Leaderboard from "./pages/Leaderboard/Leaderboard";
+import Settings from "./pages/Settings/Settings"; 
 import NotFound from "./pages/NotFound/NotFound";
 import Footer from "./components/Footer/Footer";
 import "./App.css";
@@ -106,6 +107,10 @@ function App() {
             <Route 
               path="/dashboard" 
               element={session ? <Dashboard session={session} profile={profile} /> : <Navigate to="/login" replace />} 
+            />
+            <Route 
+              path="/settings" 
+              element={session ? <Settings session={session} profile={profile} fetchProfile={fetchProfile} /> : <Navigate to="/login" replace />} 
             />
             <Route path="/courses" element={<Courses user={session?.user} />} />
             <Route path="/courses/:slug" element={<CourseDetail session={session} profile={profile} />} />

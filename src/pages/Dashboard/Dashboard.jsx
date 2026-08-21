@@ -8,7 +8,8 @@ import {
   FiCheckCircle, 
   FiZap, 
   FiTrendingUp, 
-  FiLogOut 
+  FiLogOut,
+  FiSettings 
 } from "react-icons/fi";
 import { supabase } from "../../lib/supabaseClient";
 import "./Dashboard.css";
@@ -81,6 +82,9 @@ function Dashboard() {
             <Link to="/leaderboard" className="menu-item">
               <FiAward className="menu-icon" /> <span>Reyting</span>
             </Link>
+            <Link to="/settings" className="menu-item">
+              <FiSettings className="menu-icon" /> <span>Sozlamalar</span>
+            </Link>
           </nav>
 
           <div className="sidebar-footer">
@@ -100,8 +104,15 @@ function Dashboard() {
               <h1>Salom, {loading ? "..." : displayName}! 👋</h1>
               <p>Bugun qaysi texnologiyani zabt etamiz?</p>
             </div>
-            <div className="user-avatar-circle">
-              {displayName.charAt(0).toUpperCase()}
+            <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+              <Link 
+                to="/settings" 
+                className="user-avatar-circle" 
+                title="Sozlamalarga o'tish"
+                style={{ textDecoration: "none" }}
+              >
+                {displayName.charAt(0).toUpperCase()}
+              </Link>
             </div>
           </header>
 
