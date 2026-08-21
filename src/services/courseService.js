@@ -4,7 +4,8 @@ export async function getCourses() {
   try {
     const { data: courses, error: coursesError } = await supabase
       .from("courses")
-      .select("*");
+      .select("*, lessons(id)")
+      .order("created_at", { ascending: true });
 
     if (coursesError) {
       console.error("getCourses kurslarni olishda xatolik:", coursesError);
@@ -15,25 +16,14 @@ export async function getCourses() {
       return [];
     }
 
-    const { data: lessons, error: lessonsError } = await supabase
-      .from("lessons")
-      .select("id, course_id");
-
-    if (lessonsError) {
-      console.error("getCourses darslarni olishda xatolik:", lessonsError);
-    }
-
     const publishedCourses = courses.filter(
       (course) => course.is_published === true || course.is_published === null
     );
 
-    return publishedCourses.map((course) => {
-      const courseLessons = lessons ? lessons.filter((l) => l.course_id === course.id) : [];
-      return {
-        ...course,
-        lessonsCount: courseLessons.length,
-      };
-    });
+    return publishedCourses.map((course) => ({
+      ...course,
+      lessonsCount: course.lessons ? course.lessons.length : 0,
+    }));
   } catch (err) {
     console.error("getCourses kutilmagan xatolik:", err);
     return [];
@@ -44,7 +34,7 @@ export async function getCourseBySlug(slug) {
   try {
     const { data: course, error: courseError } = await supabase
       .from("courses")
-      .select("*")
+      .select("*, lessons(*)")
       .eq("slug", slug)
       .maybeSingle();
 
@@ -53,20 +43,14 @@ export async function getCourseBySlug(slug) {
       return null;
     }
 
-    const { data: lessons, error: lessonsError } = await supabase
-      .from("lessons")
-      .select("*")
-      .eq("course_id", course.id)
-      .order("order_index", { ascending: true });
-
-    if (lessonsError) {
-      console.error("getCourseBySlug darslarda xatolik:", lessonsError);
-    }
+    const sortedLessons = course.lessons
+      ? course.lessons.sort((a, b) => (a.order_index || 0) - (b.order_index || 0))
+      : [];
 
     return {
       ...course,
-      lessons: lessons || [],
-      lessonsCount: lessons ? lessons.length : 0,
+      lessons: sortedLessons,
+      lessonsCount: sortedLessons.length,
     };
   } catch (err) {
     console.error("getCourseBySlug kutilmagan xatolik:", err);
@@ -75,46 +59,61 @@ export async function getCourseBySlug(slug) {
 }
 
 export async function getLessonsByCourseId(courseId) {
-  const { data, error } = await supabase
-    .from("lessons")
-    .select("*")
-    .eq("course_id", courseId)
-    .order("order_index", { ascending: true });
+  try {
+    const { data, error } = await supabase
+      .from("lessons")
+      .select("*")
+      .eq("course_id", courseId)
+      .order("order_index", { ascending: true });
 
-  if (error) {
-    console.error("getLessonsByCourseId xatolik:", error);
+    if (error) {
+      console.error("getLessonsByCourseId xatolik:", error);
+      return [];
+    }
+
+    return data || [];
+  } catch (err) {
+    console.error("getLessonsByCourseId kutilmagan xatolik:", err);
     return [];
   }
-
-  return data || [];
 }
 
 export async function getLessonById(lessonId) {
-  const { data, error } = await supabase
-    .from("lessons")
-    .select("*")
-    .eq("id", lessonId)
-    .maybeSingle();
+  try {
+    const { data, error } = await supabase
+      .from("lessons")
+      .select("*")
+      .eq("id", lessonId)
+      .maybeSingle();
 
-  if (error) {
-    console.error("getLessonById xatolik:", error);
+    if (error) {
+      console.error("getLessonById xatolik:", error);
+      return null;
+    }
+
+    return data;
+  } catch (err) {
+    console.error("getLessonById kutilmagan xatolik:", err);
     return null;
   }
-
-  return data;
 }
 
 export const getLeaderboard = async () => {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("id, full_name, username, avatar_url, xp_points")
-    .order("xp_points", { ascending: false })
-    .limit(10);
+  try {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, full_name, username, avatar_url, xp_points")
+      .order("xp_points", { ascending: false })
+      .limit(10);
 
-  if (error) {
-    console.error("getLeaderboard xatolik:", error);
+    if (error) {
+      console.error("getLeaderboard xatolik:", error);
+      return [];
+    }
+
+    return data || [];
+  } catch (err) {
+    console.error("getLeaderboard kutilmagan xatolik:", err);
     return [];
   }
-
-  return data || [];
 };
